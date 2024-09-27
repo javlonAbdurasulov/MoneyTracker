@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyTracker", "MoneyTracker\MoneyTracker.csproj", "{4697436C-EB1B-48B5-9397-AC11FC4FDB97}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoneyTracker", "MoneyTracker\MoneyTracker.csproj", "{4697436C-EB1B-48B5-9397-AC11FC4FDB97}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyTracker.Application", "MoneyTracker.Application\MoneyTracker.Application.csproj", "{BD017677-284D-48FE-A586-1361330FC8BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoneyTracker.Application", "MoneyTracker.Application\MoneyTracker.Application.csproj", "{BD017677-284D-48FE-A586-1361330FC8BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyTracker.Domain", "MoneyTracker.Domain\MoneyTracker.Domain.csproj", "{A21F1F3C-F591-473F-B6BF-84471E3D9985}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoneyTracker.Domain", "MoneyTracker.Domain\MoneyTracker.Domain.csproj", "{A21F1F3C-F591-473F-B6BF-84471E3D9985}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyTracker.Infrastructure", "MoneyTracker.Infrastructure\MoneyTracker.Infrastructure.csproj", "{7302FA34-C1AC-403F-9C32-9D97A9019A72}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoneyTracker.Infrastructure", "MoneyTracker.Infrastructure\MoneyTracker.Infrastructure.csproj", "{7302FA34-C1AC-403F-9C32-9D97A9019A72}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyTracker.API", "MoneyTracker.API\MoneyTracker.API.csproj", "{BF022052-BC99-4FC0-AAFE-07EBF2D52475}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{7302FA34-C1AC-403F-9C32-9D97A9019A72}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7302FA34-C1AC-403F-9C32-9D97A9019A72}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7302FA34-C1AC-403F-9C32-9D97A9019A72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF022052-BC99-4FC0-AAFE-07EBF2D52475}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF022052-BC99-4FC0-AAFE-07EBF2D52475}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF022052-BC99-4FC0-AAFE-07EBF2D52475}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF022052-BC99-4FC0-AAFE-07EBF2D52475}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
