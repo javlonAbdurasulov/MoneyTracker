@@ -1,3 +1,5 @@
+using MoneyTracker.Infrastructure.AppConfiguration;
+
 namespace MoneyTracker
 {
     public class Program
@@ -8,6 +10,7 @@ namespace MoneyTracker
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddConfigurationServices(builder.Configuration);
 
             var app = builder.Build();
             ////

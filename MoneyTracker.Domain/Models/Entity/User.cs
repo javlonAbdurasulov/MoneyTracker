@@ -11,8 +11,8 @@ namespace MoneyTracker.Domain.Models.Entity
         public int Id { get; set; }
         public string UserName { get; set; }
         public decimal Balance{ get; set; }
-        public List<User> Incomes { get; set; }
-        public List<User> Expenses { get; set; }
+        public List<Income> Incomes { get; set; }
+        public List<Expense> Expenses { get; set; }
 
     }
 }
