@@ -8,6 +8,10 @@ namespace MoneyTracker.Domain.Models.Entity
 {
     public class User
     {
+        public User()
+        {
+            
+        }
         public User(string username)
         {
             UserName = username;

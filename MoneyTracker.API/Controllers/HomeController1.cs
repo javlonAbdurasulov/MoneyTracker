@@ -1,4 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MoneyTracker.Application.Interfaces.Service;
+using MoneyTracker.Domain.Models;
+using MoneyTracker.Domain.Models.DTO;
+using MoneyTracker.Domain.Models.Entity;
 using System.Diagnostics.Metrics;
 
 namespace MoneyTracker.API.Controllers
@@ -7,15 +11,18 @@ namespace MoneyTracker.API.Controllers
     [Route("api/[controller]/[action]")]
     public class HomeController1 : Controller
     {
-        public 
-        public HomeController1()
+        public IUserService _userService;
+
+        public HomeController1(IUserService userService)
         {
+            _userService = userService;
         }
 
+
         [HttpPost]
-        public async Task<ResponseModel<Letter>> CreateLetter(LetterCreateDTO letterInCreateDto)
+        public async Task<ResponseModel<User>> CreateLetter(UserDTO userDTO)
         {
-            var letterResponseModel = await _letterService.Create(letterInCreateDto);
+            var letterResponseModel = await _userService.LoginAsync(userDTO);
             return letterResponseModel;
         }
         //[HttpDelete]
