@@ -12,5 +12,6 @@ namespace MoneyTracker.Application.Interfaces.Repository
                                       IGetByIdRepository<User>, IDeleteRepository, 
                                       IUpdateRepository<User>
     {
+        public Task<User?> GetByUsernameAsync(string username);
     }
 }
