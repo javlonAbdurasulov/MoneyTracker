@@ -1,0 +1,87 @@
+﻿@using MoneyTracker.Domain.Models
+@{
+    Layout = "/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<div class="container">
+    <h1>Money Tracker</h1>
+    <h2>Balance: @Model.Result.User.Balance</h2>
+
+    <!-- Фильтры -->
+    <div class="filters">
+        <div class="filter-group">
+            <label for="date-filter">Date Start</label>
+            <input type="date" id="date-filter">
+        </div>
+        <div class="filter-group">
+            <label for="date-filter">Date End</label>
+            <input type="date" id="date-filter">
+        </div>
+        <div class="filter-group">
+            <label for="price-filter">Price</label>
+            <input type="number" id="price-filter" placeholder="Enter price">
+        </div>
+        <div class="filter-group">
+            <label for="category-filter">Category</label>
+            <select id="category-filter">
+                <option value="all">All</option>
+                <option value="income">Income</option>
+                <option value="expense">Expense</option>
+            </select>
+        </div>
+        <button class="filter-btn" id="filter-button">Apply Filters</button>
+    </div>
+
+    <!-- Таблица с транзакциями -->
+    <table class="transactions-table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Comment</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Пример транзакции -->
+            @foreach (var transaction in Model.Result.Incomes)
+            {
+                <tr>
+                    <td>@transaction.Date.ToString("yyyy-MM-dd")</td>
+                    <td>@transaction.Category</td>
+                    <td>@transaction.Price.ToString(" Cум")</td>
+                    <td>@transaction.Comment</td>
+                    <td>
+                        <button class="action-btn update-btn">Update</button>
+                        <button class="action-btn delete-btn">Delete</button>
+                    </td>
+                </tr>
+            }
+            @foreach (var transaction in Model.Result.Expenses)
+            {
+                <tr>
+                    <td>@transaction.Date.ToString("yyyy-MM-dd")</td>
+                    <td>@transaction.Category</td>
+                    <td>@transaction.Price.ToString(" Cум")</td>
+                    <td>@transaction.Comment</td>
+                    <td>
+                        <button class="action-btn update-btn">Update</button>
+                        <button class="action-btn delete-btn">Delete</button>
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td>2024-09-25</td>
+                <td>Expense</td>
+                <td>$200</td>
+                <td>New laptop</td>
+                <td>
+                    <button class="action-btn update-btn">Update</button>
+                    <button class="action-btn delete-btn">Delete</button>
+                </td>
+            </tr>
+            <!-- Другие транзакции будут добавлены динамически -->
+        </tbody>
+    </table>
+</div>

@@ -9,5 +9,6 @@ namespace MoneyTracker.Application.Services
 {
     public class IncomeService:IIncomeService
     {
+
     }
 }
