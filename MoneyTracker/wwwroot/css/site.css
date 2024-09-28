@@ -29,6 +29,9 @@ h2 {
     text-align: center;
     margin-bottom: 20px;
 }
+.balance{
+    color: red;
+}
 
 .input-group {
     margin-bottom: 15px;
