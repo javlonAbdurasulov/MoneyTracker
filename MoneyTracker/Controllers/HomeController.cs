@@ -34,7 +34,8 @@ namespace MoneyTracker.Controllers
             DashboardModel responseDashModel = new DashboardModel()
             {
                 User = responseUser.Result,
-
+                Incomes = new(),
+                Expenses = new()
             };
 
             return View(new ResponseModel<DashboardModel>(responseDashModel));
