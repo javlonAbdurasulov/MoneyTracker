@@ -20,7 +20,7 @@ namespace MoneyTracker.API.Controllers
 
 
         [HttpPost]
-        public async Task<ResponseModel<User>> CreateLetter(UserDTO userDTO)
+        public async Task<ResponseModel<User>> LoginUser(UserDTO userDTO)
         {
             var letterResponseModel = await _userService.LoginAsync(userDTO);
             return letterResponseModel;
