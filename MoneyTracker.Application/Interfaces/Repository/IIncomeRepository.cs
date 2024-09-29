@@ -10,7 +10,7 @@ namespace MoneyTracker.Application.Interfaces.Repository
 {
     public interface IIncomeRepository: ICreateRepository<Income>, IGetAllRepository<Income>,
                                       IGetByIdRepository<Income>, IDeleteRepository,
-                                      IUpdateRepository<Income>
+                                      IUpdateRepository<Income>,IGetQueryable<Income>
     {
     }
 }

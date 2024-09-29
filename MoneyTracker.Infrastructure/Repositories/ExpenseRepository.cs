@@ -2,6 +2,7 @@
 using MoneyTracker.Application.Interfaces.Repository;
 using MoneyTracker.Domain.Models.Entity;
 using MoneyTracker.Infrastructure.Data;
+using MoneyTracker.Infrastructure.Filter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,6 +49,11 @@ namespace MoneyTracker.Infrastructure.Repositories
         {
             Expense? expense = await _db.Expense.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
             return expense;
+        }
+
+        public IQueryable<Expense> GetQueryable()
+        {
+            return _db.Expense.AsQueryable();
         }
 
         public async Task<Expense> UpdateAsync(Expense obj)

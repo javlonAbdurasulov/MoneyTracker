@@ -15,16 +15,33 @@ namespace MoneyTracker.Application.Services
     {
         private readonly IExpenseRepository _expenseRepository;
         private readonly IUserService _userService;
+        private readonly IFilterService<Expense> _filterExpenseService;
 
-        public ExpenseService(IExpenseRepository expenseRepository, IUserService userService)
+        public ExpenseService(IExpenseRepository expenseRepository, IUserService userService, IFilterService<Expense> filterExpenseService)
         {
             _expenseRepository = expenseRepository;
             _userService = userService;
+            _filterExpenseService = filterExpenseService;
         }
 
-        public Task<ResponseModel<ResponseModel<List<Expense>>>> ApplyFilter(MoneyFilterDTO expenseFilterDTO)
+        public async Task<ResponseModel<List<Expense>>> ApplyFilter(MoneyFilterDTO expenseFilterDTO)
         {
-            throw new NotImplementedException();
+            var query = _expenseRepository.GetQueryable();
+            var filterList = _filterExpenseService.FilterByUser(query, expenseFilterDTO.UserId);
+            filterList = _filterExpenseService.FilterByCategory(filterList, "Expense");
+            filterList = _filterExpenseService.FilterByDate(filterList, expenseFilterDTO.DateStart, expenseFilterDTO.DateEnd);
+            filterList = _filterExpenseService.FilterByAmount(filterList, expenseFilterDTO.AmountStart, expenseFilterDTO.AmountEnd);
+            if (expenseFilterDTO.OrderByDateUp)
+            {
+                filterList = _filterExpenseService.OrderByDateUp(filterList);
+            }
+            if (expenseFilterDTO.OrderByAmountUp)
+            {
+                filterList = _filterExpenseService.OrderByAmountUp(filterList);
+            }
+
+            var res = _filterExpenseService.EndFilter(filterList);
+            return new(res);
         }
 
         public async Task<ResponseModel<Expense>> Create(MoneyDTO expenseDTO)

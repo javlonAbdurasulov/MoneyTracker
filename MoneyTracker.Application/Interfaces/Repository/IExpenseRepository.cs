@@ -10,7 +10,7 @@ namespace MoneyTracker.Application.Interfaces.Repository
 {
     public interface IExpenseRepository : ICreateRepository<Expense>, IGetAllRepository<Expense>,
                                       IGetByIdRepository<Expense>, IDeleteRepository,
-                                      IUpdateRepository<Expense>
+                                      IUpdateRepository<Expense>,IGetQueryable<Expense>
     {
     }
 }

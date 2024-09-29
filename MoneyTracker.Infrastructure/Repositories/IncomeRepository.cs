@@ -49,6 +49,11 @@ namespace MoneyTracker.Infrastructure.Repositories
             return income;
         }
 
+        public IQueryable<Income> GetQueryable()
+        {
+            return _db.Incomes.AsQueryable();
+        }
+
         public async Task<Income> UpdateAsync(Income obj)
         {
             _db.Incomes.Update(obj);
