@@ -14,10 +14,12 @@ namespace MoneyTracker.Application.Services
     public class ExpenseService : IExpenseService
     {
         private readonly IExpenseRepository _expenseRepository;
+        private readonly IUserService _userService;
 
-        public ExpenseService(IExpenseRepository expenseRepository)
+        public ExpenseService(IExpenseRepository expenseRepository, IUserService userService)
         {
             _expenseRepository = expenseRepository;
+            _userService = userService;
         }
 
         public Task<ResponseModel<ResponseModel<List<Expense>>>> ApplyFilter(MoneyFilterDTO expenseFilterDTO)
@@ -40,12 +42,34 @@ namespace MoneyTracker.Application.Services
             {
                 return new("ошибка при создании");
             }
+            var updatedBalanceUser = await _userService.UpdateBalanceAsync(expense.UserId, 0, expense.Amount);
+            if (updatedBalanceUser == null)
+            {
+                return new(updatedBalanceUser.Error);
+            }
             return new(responseExpense);
         }
 
         public async Task<bool> Delete(int expenseId)
         {
+            Expense? DeletedExpense = await _expenseRepository.GetById(expenseId);
+            if (DeletedExpense == null)
+            {
+                return false;
+            }
+            decimal deletedAmount = DeletedExpense.Amount;
+
             var responseDelete = await _expenseRepository.DeleteAsync(expenseId);
+
+            if (responseDelete)
+            {
+                //
+                var updatedBalanceUser = await _userService.UpdateBalanceAsync(expenseId, deletedAmount, 0);
+                if (updatedBalanceUser == null)
+                {
+                    return false;
+                }
+            }
             return responseDelete;
         }
 
@@ -66,8 +90,14 @@ namespace MoneyTracker.Application.Services
             {
                 return new(expenseById.Error);
             }
-            expenseById.Result = expense;
-            var responseExpense = await _expenseRepository.UpdateAsync(expenseById.Result);
+            
+            var responseExpense = await _expenseRepository.UpdateAsync(expense);
+            //
+            var updatedBalanceUser = await _userService.UpdateBalanceAsync(expense.UserId, expenseById.Result.Amount, expense.Amount);
+            if (updatedBalanceUser == null)
+            {
+                return new(updatedBalanceUser.Error);
+            }
             return new(responseExpense);
         }
 

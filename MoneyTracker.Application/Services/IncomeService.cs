@@ -52,13 +52,21 @@ namespace MoneyTracker.Application.Services
 
         public async Task<bool> Delete(int incomeId)
         {
+            Income? DeletedIncome = await _incomeRepository.GetById(incomeId);
+            if (DeletedIncome == null)
+            {
+                return false;
+            }
+            decimal deletedAmount = DeletedIncome.Amount;
+
             var responseDelete = await _incomeRepository.DeleteAsync(incomeId);
             if(responseDelete)
             {
-                var updatedBalanceUser = await _userService.UpdateBalanceAsync(incomeId, 0, responseDelete.);
+                //
+                var updatedBalanceUser = await _userService.UpdateBalanceAsync(incomeId, deletedAmount, 0);
                 if (updatedBalanceUser == null)
                 {
-                    return new(updatedBalanceUser.Error);
+                    return false;
                 }
             }
             return responseDelete;
@@ -81,8 +89,14 @@ namespace MoneyTracker.Application.Services
             {
                 return new(incomeById.Error);
             }
-            incomeById.Result = income;
-            var responseIncome = await _incomeRepository.UpdateAsync(incomeById.Result); 
+            
+            var responseIncome = await _incomeRepository.UpdateAsync(income);
+            //
+            var updatedBalanceUser = await _userService.UpdateBalanceAsync(income.UserId, incomeById.Result.Amount, income.Amount);
+            if (updatedBalanceUser == null)
+            {
+                return new(updatedBalanceUser.Error);
+            }
             return new(responseIncome);
         }
     }
