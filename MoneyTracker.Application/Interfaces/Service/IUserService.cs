@@ -12,5 +12,6 @@ namespace MoneyTracker.Application.Interfaces.Service
     public interface IUserService
     {
         public Task<ResponseModel<User>> LoginAsync(UserDTO loginUser);
+        public Task<ResponseModel<User>> UpdateBalanceAsync(int userId, decimal amountMinus, decimal amountPlus);
     }
 }

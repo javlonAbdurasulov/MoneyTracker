@@ -31,7 +31,19 @@ namespace MoneyTracker.Application.Services
             user = await _userRepository.CreateAsync(user);
             
             return new(user);
+        }
 
+        public async Task<ResponseModel<User>> UpdateBalanceAsync(int userId,decimal amountMinus,decimal amountPlus)
+        {
+            var user = await _userRepository.GetById(userId);
+            if (user == null)
+            {
+                return new("Пользователь с таким Id не существует!");
+            }
+            user.Balance -= amountMinus;
+            user.Balance += amountPlus;
+            var updatedUser = await _userRepository.UpdateAsync(user);
+            return new(updatedUser);
         }
     }
 }
