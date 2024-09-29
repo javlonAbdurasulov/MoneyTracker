@@ -35,9 +35,17 @@ namespace MoneyTracker.Application.Services
             {
                 filterList = _filterIncomeService.OrderByDateUp(filterList);
             }
+            else
+            {
+                filterList = _filterIncomeService.OrderByDateDown(filterList);
+            }
             if(incomeFilterDTO.OrderByAmountUp)
             {
                 filterList = _filterIncomeService.OrderByAmountUp(filterList);
+            }
+            else
+            {
+                filterList = _filterIncomeService.OrderByAmountDown(filterList);
             }
 
             var res = _filterIncomeService.EndFilter(filterList);
