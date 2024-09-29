@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace MoneyTracker.Domain.Models.DTO
 {
-    public class MoneyFilterDTO
+    public class CreateView
     {
-        public DateTime DateStart { get; set; }
-        public DateTime DateEnd { get; set; }
+        public DateTime Date { get; set; }
         public string Category { get; set; }
-        public decimal AmountStart { get; set; }
-        public decimal AmountEnd { get; set; }
-        public byte OrderBy{ get; set; }
+        public decimal Amount { get; set; }
+        public string Comment { get; set; }
         public int UserId { get; set; }
+        public string UserName { get; set; }
+        public bool DefaultFilter{ get; set; }
 
     }
 }

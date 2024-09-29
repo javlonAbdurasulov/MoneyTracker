@@ -27,28 +27,28 @@ namespace MoneyTracker.Application.Services
         public async Task<ResponseModel<List<Expense>>> ApplyFilter(MoneyFilterDTO expenseFilterDTO)
         {
             var query = _expenseRepository.GetQueryable();
-            var filterList = _filterExpenseService.FilterByUser(query, expenseFilterDTO.UserId);
-            filterList = _filterExpenseService.FilterByCategory(filterList, "Expense");
-            filterList = _filterExpenseService.FilterByDate(filterList, expenseFilterDTO.DateStart, expenseFilterDTO.DateEnd);
-            filterList = _filterExpenseService.FilterByAmount(filterList, expenseFilterDTO.AmountStart, expenseFilterDTO.AmountEnd);
-            if (expenseFilterDTO.OrderByDateUp)
+            var filterList = await _filterExpenseService.FilterByUser(query, expenseFilterDTO.UserId);
+            filterList = await _filterExpenseService.FilterByCategory(filterList, "Expense");
+            filterList = await _filterExpenseService.FilterByDate(filterList, expenseFilterDTO.DateStart, expenseFilterDTO.DateEnd);
+            filterList = await _filterExpenseService.FilterByAmount(filterList, expenseFilterDTO.AmountStart, expenseFilterDTO.AmountEnd);
+            if (expenseFilterDTO.OrderBy == 1)
             {
-                filterList = _filterExpenseService.OrderByDateUp(filterList);
+                filterList = await _filterExpenseService.OrderByDateUp(filterList);
+            }
+            else if (expenseFilterDTO.OrderBy == 2)
+            {
+                filterList = await _filterExpenseService.OrderByDateDown(filterList);
+            }
+            else if (expenseFilterDTO.OrderBy == 3)
+            {
+                filterList = await _filterExpenseService.OrderByAmountUp(filterList);
             }
             else
             {
-                filterList = _filterExpenseService.OrderByDateDown(filterList);
-            }
-            if (expenseFilterDTO.OrderByAmountUp)
-            {
-                filterList = _filterExpenseService.OrderByAmountUp(filterList);
-            }
-            else
-            {
-                filterList = _filterExpenseService.OrderByAmountDown(filterList);
+                filterList = await _filterExpenseService.OrderByAmountDown(filterList);
             }
 
-            var res = _filterExpenseService.EndFilter(filterList);
+            var res = await _filterExpenseService.EndFilter(filterList);
             return new(res);
         }
 
@@ -59,7 +59,8 @@ namespace MoneyTracker.Application.Services
                 Amount = expenseDTO.Amount,
                 Category = expenseDTO.Category,
                 Comment = expenseDTO.Comment,
-                Date = expenseDTO.Date,
+                //
+                Date = expenseDTO.Date.ToUniversalTime(),
                 UserId = expenseDTO.UserId
             };
             var responseExpense = await _expenseRepository.CreateAsync(expense);
@@ -67,7 +68,7 @@ namespace MoneyTracker.Application.Services
             {
                 return new("ошибка при создании");
             }
-            var updatedBalanceUser = await _userService.UpdateBalanceAsync(expense.UserId, 0, expense.Amount);
+            var updatedBalanceUser = await _userService.UpdateBalanceAsync(expense.UserId, expense.Amount,0);
             if (updatedBalanceUser == null)
             {
                 return new(updatedBalanceUser.Error);
@@ -118,7 +119,7 @@ namespace MoneyTracker.Application.Services
             
             var responseExpense = await _expenseRepository.UpdateAsync(expense);
             //
-            var updatedBalanceUser = await _userService.UpdateBalanceAsync(expense.UserId, expenseById.Result.Amount, expense.Amount);
+            var updatedBalanceUser = await _userService.UpdateBalanceAsync(expense.UserId, expense.Amount, expenseById.Result.Amount);
             if (updatedBalanceUser == null)
             {
                 return new(updatedBalanceUser.Error);

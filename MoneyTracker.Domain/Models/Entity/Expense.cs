@@ -8,9 +8,9 @@ namespace MoneyTracker.Domain.Models.Entity
 {
     public class Expense : BaseTransaction
     {
-        public override decimal Calculate(decimal curranteAmount)
-        {
-            return curranteAmount - Amount;
-        }
+        //public override decimal Calculate(decimal curranteAmount)
+        //{
+        //    return curranteAmount - Amount;
+        //}
     }
 }

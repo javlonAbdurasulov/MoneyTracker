@@ -20,14 +20,14 @@ namespace MoneyTracker.Application.Services
             _userRepository = userRepository;
         }
 
-        public async Task<ResponseModel<User>> LoginAsync(UserDTO loginUser)
+        public async Task<ResponseModel<User>> LoginAsync(string UserName)
         {
-            User? UsernameIsHave = await _userRepository.GetByUsernameAsync(loginUser.UserName);
+            User? UsernameIsHave = await _userRepository.GetByUsernameAsync(UserName);
             if (UsernameIsHave != null)
             {
                 return new(UsernameIsHave);
             }
-            User user = new User(loginUser.UserName);
+            User user = new User(UserName);
             user = await _userRepository.CreateAsync(user);
             
             return new(user);
