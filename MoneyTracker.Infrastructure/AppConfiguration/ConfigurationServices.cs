@@ -4,7 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 using MoneyTracker.Application.Interfaces.Repository;
 using MoneyTracker.Application.Interfaces.Service;
 using MoneyTracker.Application.Services;
+using MoneyTracker.Domain.Models.Entity;
 using MoneyTracker.Infrastructure.Data;
+using MoneyTracker.Infrastructure.Filter;
 using MoneyTracker.Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
@@ -32,6 +34,9 @@ namespace MoneyTracker.Infrastructure.AppConfiguration
             services.AddScoped<IIncomeService, IncomeService>();
             services.AddScoped<IExpenseService, ExpenseService>();
 
+            services.AddScoped<IFilterService<Income>, FilterIncomeService>();
+            services.AddScoped<IFilterService<Expense>, FilterExpenseService>();
+            services.AddScoped<IFilterService<BaseTransaction>, FilterService>();
         }
     }
 }
