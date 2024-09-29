@@ -14,7 +14,7 @@ namespace MoneyTracker.Application.Interfaces.Service
         public Task<ResponseModel<Income>> Create(MoneyDTO income);
         public Task<ResponseModel<Income>> Update(Income income);
         public Task<ResponseModel<Income>> GetById(int incomeId);
-        public Task<ResponseModel<ResponseModel<List<Income>>>> ApplyFilter(MoneyFilterDTO incomeFilterDTO);
+        public Task<ResponseModel<List<Income>>> ApplyFilter(MoneyFilterDTO incomeFilterDTO);
         public Task<bool> Delete(int incomeId);
     }
 }

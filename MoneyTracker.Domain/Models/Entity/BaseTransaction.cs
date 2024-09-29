@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MoneyTracker.Domain.Models.Entity
 {
-    public abstract class BaseTransaction
+    public abstract class BaseTransaction:IDate,ICategory,IAmount
     {
         public int Id { get; set; }
         public DateTime Date{ get; set; }
