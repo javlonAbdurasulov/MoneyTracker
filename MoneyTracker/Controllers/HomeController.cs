@@ -20,6 +20,20 @@ namespace MoneyTracker.Controllers
 
         public IActionResult Index()
         {
+            /////
+            MoneyFilterDTO moneyFilterDTO = new MoneyFilterDTO()
+            {
+                DateEnd = DateTime.MaxValue.ToUniversalTime(),
+                DateStart = DateTime.MinValue.ToUniversalTime(),
+                AmountStart = decimal.MinValue,
+                AmountEnd = decimal.MaxValue,
+                Category = "Income",
+                OrderByAmountUp = true,
+                OrderByDateUp = true,
+                UserId = 1
+            };
+            ///
+
             return View();
         }
         public async Task<IActionResult> Dashboard(UserDTO userDTO)
