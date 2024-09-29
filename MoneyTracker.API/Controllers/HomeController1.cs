@@ -31,6 +31,7 @@ namespace MoneyTracker.API.Controllers
         public async Task<ResponseModel<Income>> CreateIncome(MoneyDTO moneyDTO)
         {
             var incomeResponseModel = await _incomeService.Create(moneyDTO);
+
             return incomeResponseModel;
         }
         [HttpPut]
