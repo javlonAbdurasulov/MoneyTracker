@@ -111,6 +111,9 @@ input, select {
 .transactions-table {
     width: 100%;
     border-collapse: collapse;
+    max-height: 500px; 
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
     .transactions-table th, .transactions-table td {
