@@ -45,7 +45,7 @@ namespace MoneyTracker.Infrastructure.Repositories
 
         public async Task<Income?> GetById(int id)
         {
-            Income? income = await _db.Incomes.FirstOrDefaultAsync(x => x.Id == id);
+            Income? income = await _db.Incomes.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
             return income;
         }
 
