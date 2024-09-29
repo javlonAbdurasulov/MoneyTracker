@@ -11,19 +11,27 @@ namespace MoneyTracker.API.Controllers
     [Route("api/[controller]/[action]")]
     public class HomeController1 : Controller
     {
-        public IUserService _userService;
+        private readonly IUserService _userService;
+        private readonly IIncomeService _incomeService;
 
-        public HomeController1(IUserService userService)
+        public HomeController1(IUserService userService, IIncomeService incomeService)
         {
             _userService = userService;
+            _incomeService = incomeService;
         }
 
 
         [HttpPost]
         public async Task<ResponseModel<User>> LoginUser(UserDTO userDTO)
         {
-            var letterResponseModel = await _userService.LoginAsync(userDTO);
-            return letterResponseModel;
+            var userResponseModel = await _userService.LoginAsync(userDTO);
+            return userResponseModel;
+        }
+        [HttpPost]
+        public async Task<ResponseModel<Income>> CreateIncome(MoneyDTO moneyDTO)
+        {
+            var incomeResponseModel = await _incomeService.Create(moneyDTO);
+            return incomeResponseModel;
         }
         //[HttpDelete]
         //public async Task<bool> DeleteLetter(int Id)
