@@ -64,7 +64,7 @@ namespace MoneyTracker.Application.Services
             if (responseDelete)
             {
                 //
-                var updatedBalanceUser = await _userService.UpdateBalanceAsync(expenseId, deletedAmount, 0);
+                var updatedBalanceUser = await _userService.UpdateBalanceAsync(expenseId, 0, deletedAmount);
                 if (updatedBalanceUser == null)
                 {
                     return false;
