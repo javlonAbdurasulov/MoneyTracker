@@ -3,6 +3,7 @@ using MoneyTracker.Application.Interfaces.Service;
 using MoneyTracker.Domain.Models;
 using MoneyTracker.Domain.Models.DTO;
 using MoneyTracker.Domain.Models.Entity;
+using MoneyTracker.Infrastructure.Filter;
 using System.Diagnostics.Metrics;
 
 namespace MoneyTracker.API.Controllers
@@ -26,6 +27,24 @@ namespace MoneyTracker.API.Controllers
         {
             var userResponseModel = await _userService.LoginAsync(userDTO);
             return userResponseModel;
+        }
+        [HttpPost]
+        public async Task<ResponseModel<List<Income>>> FilterIncome(MoneyDTO moneyDTO)
+        {
+            MoneyFilterDTO moneyFilterDTO = new MoneyFilterDTO()
+            {
+                DateEnd = DateTime.MaxValue,
+                DateStart = DateTime.MinValue,
+                AmountStart = decimal.MinValue,
+                AmountEnd = decimal.MaxValue,
+                Category = "Income",
+                OrderByAmountUp = true,
+                OrderByDateUp = true,
+                UserId = 1
+            };
+            var res = await _incomeService.ApplyFilter(moneyFilterDTO);
+
+            return res;
         }
         [HttpPost]
         public async Task<ResponseModel<Income>> CreateIncome(MoneyDTO moneyDTO)
