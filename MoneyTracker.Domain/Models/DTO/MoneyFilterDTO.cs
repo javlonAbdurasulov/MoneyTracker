@@ -13,5 +13,7 @@ namespace MoneyTracker.Domain.Models.DTO
         public string Category { get; set; }
         public decimal AmountStart { get; set; }
         public decimal AmountEnd { get; set; }
+        public int UserId { get; set; }
+
     }
 }

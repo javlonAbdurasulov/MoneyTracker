@@ -13,6 +13,7 @@ namespace MoneyTracker.Domain.Models.Entity
         public string Category { get; set; }
         public decimal Amount { get; set; }
         public string Comment { get; set; }
+        public int UserId{ get; set; }
 
         public abstract decimal Calculate(decimal curranteAmount);
     }

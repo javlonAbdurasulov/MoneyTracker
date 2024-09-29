@@ -32,7 +32,8 @@ namespace MoneyTracker.Application.Services
                 Amount = expenseDTO.Amount,
                 Category = expenseDTO.Category,
                 Comment = expenseDTO.Comment,
-                Date = expenseDTO.Date
+                Date = expenseDTO.Date,
+                UserId = expenseDTO.UserId
             };
             var responseExpense = await _expenseRepository.CreateAsync(expense);
             if (responseExpense == null)
