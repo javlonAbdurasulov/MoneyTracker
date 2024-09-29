@@ -33,6 +33,12 @@ namespace MoneyTracker.API.Controllers
             var incomeResponseModel = await _incomeService.Create(moneyDTO);
             return incomeResponseModel;
         }
+        [HttpPut]
+        public async Task<ResponseModel<Income>> UpdateIncome(Income letter)
+        {
+            var UpdateLetterResponseModel = await _incomeService.Update(letter);
+            return UpdateLetterResponseModel;
+        }
         //[HttpDelete]
         //public async Task<bool> DeleteLetter(int Id)
         //{

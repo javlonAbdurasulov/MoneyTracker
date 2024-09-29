@@ -28,7 +28,7 @@ namespace MoneyTracker.Infrastructure.Repositories
         }
         public async Task<User?> GetByUsernameAsync(string username)
         {
-            var user = await _db.Users.FirstOrDefaultAsync(x => x.UserName == username);
+            var user = await _db.Users.AsNoTracking().FirstOrDefaultAsync(x => x.UserName == username);
             return user;
         }
         public async Task<bool> DeleteAsync(int id)

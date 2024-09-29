@@ -67,7 +67,7 @@ namespace MoneyTracker.Application.Services
                 return new(incomeById.Error);
             }
             incomeById.Result = income;
-            var responseIncome = await _incomeRepository.UpdateAsync(incomeById.Result); 
+            var responseIncome = await _incomeRepository.UpdateAsync(income); 
             return new(responseIncome);
         }
     }
