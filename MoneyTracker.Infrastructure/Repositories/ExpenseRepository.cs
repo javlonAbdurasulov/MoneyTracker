@@ -39,6 +39,7 @@ namespace MoneyTracker.Infrastructure.Repositories
 
         public async Task<List<Expense>> GetAllAsync()
         {
+            DbSet<Expense> res = _db.Expense;
             var allExpenses = await _db.Expense.ToListAsync();
             return allExpenses;
         }
