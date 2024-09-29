@@ -50,7 +50,7 @@ namespace MoneyTracker.Infrastructure.Repositories
 
         public async Task<User?> GetById(int id)
         {
-            User? user = await _db.Users.FirstOrDefaultAsync(x => x.Id == id);
+            User? user = await _db.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
             return user;
         }
 
