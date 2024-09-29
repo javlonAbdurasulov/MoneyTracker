@@ -31,6 +31,7 @@ namespace MoneyTracker.Infrastructure.AppConfiguration
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IIncomeService, IncomeService>();
             services.AddScoped<IExpenseService, ExpenseService>();
+
         }
     }
 }
