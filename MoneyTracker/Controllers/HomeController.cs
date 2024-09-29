@@ -39,7 +39,7 @@ namespace MoneyTracker.Controllers
                     Amount = income.Result.Amount,
                     Category = income.Result.Category,
                     Comment = income.Result.Comment,
-                    Date = income.Result.Date,
+                    Date = income.Result.Date.ToUniversalTime(),
                     Id = income.Result.Id,
                     UserId = income.Result.UserId,
                     UserName = updateTransaction.UserName
@@ -55,7 +55,7 @@ namespace MoneyTracker.Controllers
                     Amount = expense.Result.Amount,
                     Category = expense.Result.Category,
                     Comment = expense.Result.Comment,
-                    Date = expense.Result.Date,
+                    Date = expense.Result.Date.ToUniversalTime(),
                     Id = expense.Result.Id,
                     UserId = expense.Result.UserId,
                     UserName = updateTransaction.UserName
@@ -74,7 +74,7 @@ namespace MoneyTracker.Controllers
                     Amount = updateView.Amount,
                     Category = updateView.Category,
                     Comment = updateView.Comment,
-                    Date = updateView.Date,
+                    Date = updateView.Date.ToUniversalTime(),
                     Id = updateView.Id,
                     UserId = updateView.UserId
                 };
@@ -94,7 +94,7 @@ namespace MoneyTracker.Controllers
                     Amount = updateView.Amount,
                     Category = updateView.Category,
                     Comment = updateView.Comment,
-                    Date = updateView.Date,
+                    Date = updateView.Date.ToUniversalTime(),
                     Id = updateView.Id,
                     UserId = updateView.UserId
                 };
@@ -110,7 +110,7 @@ namespace MoneyTracker.Controllers
             }
 
         }
-        public async Task<IActionResult> DeleteTransaction(UpdateTransactionDTO DeleteTransaction)
+        public async Task<IActionResult> DeleteTransactions(UpdateTransactionDTO DeleteTransaction)
         {
             if (DeleteTransaction.Category == "Income")
             {
