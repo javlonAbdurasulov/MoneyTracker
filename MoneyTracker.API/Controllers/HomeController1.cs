@@ -40,12 +40,12 @@ namespace MoneyTracker.API.Controllers
             var UpdateLetterResponseModel = await _incomeService.Update(letter);
             return UpdateLetterResponseModel;
         }
-        //[HttpDelete]
-        //public async Task<bool> DeleteLetter(int Id)
-        //{
-        //    var DeleteLetterResponseModel = await _letterService.Delete(Id);
-        //    return DeleteLetterResponseModel;
-        //}
+        [HttpDelete]
+        public async Task<bool> DeleteIncome(int Id)
+        {
+            var DeleteLetterResponseModel = await _incomeService.Delete(Id);
+            return DeleteLetterResponseModel;
+        }
         //[HttpPut]
         //public async Task<bool> UpdateLetter(Letter letter)
         //{
