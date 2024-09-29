@@ -14,10 +14,12 @@ namespace MoneyTracker.Application.Services
     public class IncomeService : IIncomeService
     {
         private readonly IIncomeRepository _incomeRepository;
+        private readonly IUserService _userService;
 
-        public IncomeService(IIncomeRepository incomeRepository)
+        public IncomeService(IIncomeRepository incomeRepository, IUserService userService)
         {
             _incomeRepository = incomeRepository;
+            _userService = userService;
         }
 
         public Task<ResponseModel<ResponseModel<List<Income>>>> ApplyFilter(MoneyFilterDTO incomeFilterDTO)
@@ -40,12 +42,25 @@ namespace MoneyTracker.Application.Services
             {
                 return new("ошибка при создании");
             }
+            var updatedBalanceUser = await _userService.UpdateBalanceAsync(income.UserId, 0, income.Amount);
+            if (updatedBalanceUser == null)
+            {
+                return new(updatedBalanceUser.Error);
+            }
             return new(responseIncome);
         }
 
         public async Task<bool> Delete(int incomeId)
         {
             var responseDelete = await _incomeRepository.DeleteAsync(incomeId);
+            if(responseDelete)
+            {
+                var updatedBalanceUser = await _userService.UpdateBalanceAsync(incomeId, 0, responseDelete.);
+                if (updatedBalanceUser == null)
+                {
+                    return new(updatedBalanceUser.Error);
+                }
+            }
             return responseDelete;
         }
 
