@@ -13,8 +13,7 @@ namespace MoneyTracker.Domain.Models.DTO
         public string Category { get; set; }
         public decimal AmountStart { get; set; }
         public decimal AmountEnd { get; set; }
-        public bool OrderByDateUp{ get; set; }
-        public bool OrderByAmountUp{ get; set; }
+        public byte OrderBy{ get; set; }
         public int UserId { get; set; }
 
     }

@@ -31,15 +31,14 @@ namespace MoneyTracker.Application.Services
             filterList = _filterIncomeService.FilterByCategory(filterList, "Income"); 
             filterList = _filterIncomeService.FilterByDate(filterList, incomeFilterDTO.DateStart, incomeFilterDTO.DateEnd);
             filterList = _filterIncomeService.FilterByAmount(filterList, incomeFilterDTO.AmountStart, incomeFilterDTO.AmountEnd);
-            if (incomeFilterDTO.OrderByDateUp)
+            if (incomeFilterDTO.OrderBy==1)
             {
                 filterList = _filterIncomeService.OrderByDateUp(filterList);
-            }
-            else
+            }else if (incomeFilterDTO.OrderBy == 2)
             {
                 filterList = _filterIncomeService.OrderByDateDown(filterList);
             }
-            if(incomeFilterDTO.OrderByAmountUp)
+            else if (incomeFilterDTO.OrderBy == 3)
             {
                 filterList = _filterIncomeService.OrderByAmountUp(filterList);
             }

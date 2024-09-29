@@ -31,15 +31,15 @@ namespace MoneyTracker.Application.Services
             filterList = _filterExpenseService.FilterByCategory(filterList, "Expense");
             filterList = _filterExpenseService.FilterByDate(filterList, expenseFilterDTO.DateStart, expenseFilterDTO.DateEnd);
             filterList = _filterExpenseService.FilterByAmount(filterList, expenseFilterDTO.AmountStart, expenseFilterDTO.AmountEnd);
-            if (expenseFilterDTO.OrderByDateUp)
+            if (expenseFilterDTO.OrderBy == 1)
             {
                 filterList = _filterExpenseService.OrderByDateUp(filterList);
             }
-            else
+            else if (expenseFilterDTO.OrderBy == 2)
             {
                 filterList = _filterExpenseService.OrderByDateDown(filterList);
             }
-            if (expenseFilterDTO.OrderByAmountUp)
+            else if (expenseFilterDTO.OrderBy == 3)
             {
                 filterList = _filterExpenseService.OrderByAmountUp(filterList);
             }

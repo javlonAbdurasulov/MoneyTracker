@@ -107,8 +107,7 @@ namespace MoneyTracker.Controllers
                     AmountStart = decimal.MinValue,
                     AmountEnd = decimal.MaxValue,
                     Category = "All",
-                    OrderByAmountUp = false,
-                    OrderByDateUp = false,
+                    OrderBy = 2,
                     UserId =responseUser.Result.Id
                 };
 

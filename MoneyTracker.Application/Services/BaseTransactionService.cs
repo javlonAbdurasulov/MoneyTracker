@@ -28,15 +28,15 @@ namespace MoneyTracker.Application.Services
             
             filterList = _filterService.FilterByDate(filterList, moneyFilterDTO.DateStart, moneyFilterDTO.DateEnd);
             filterList = _filterService.FilterByAmount(filterList, moneyFilterDTO.AmountStart, moneyFilterDTO.AmountEnd);
-            if (moneyFilterDTO.OrderByDateUp)
+            if (moneyFilterDTO.OrderBy == 1)
             {
                 filterList = _filterService.OrderByDateUp(filterList);
             }
-            else
+            else if (moneyFilterDTO.OrderBy == 2)
             {
                 filterList = _filterService.OrderByDateDown(filterList);
             }
-            if (moneyFilterDTO.OrderByAmountUp)
+            else if (moneyFilterDTO.OrderBy == 3)
             {
                 filterList = _filterService.OrderByAmountUp(filterList);
             }
