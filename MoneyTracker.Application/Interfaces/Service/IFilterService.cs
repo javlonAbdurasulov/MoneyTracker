@@ -1,4 +1,5 @@
-﻿using MoneyTracker.Domain.Models.Entity;
+﻿using MoneyTracker.Domain.Models.DTO;
+using MoneyTracker.Domain.Models.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,5 +19,6 @@ namespace MoneyTracker.Application.Interfaces.Service
         public  IQueryable<T> OrderByAmountUp(IQueryable<T> queryable);
         public  IQueryable<T> OrderByAmountDown(IQueryable<T> queryable);
         public  List<T> EndFilter(IQueryable<T> queryable);
+        public IQueryable<TransactionListDTO> MargeCategory();
     }
 }

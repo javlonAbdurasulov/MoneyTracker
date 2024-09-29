@@ -2,12 +2,23 @@
     ViewData["Title"] = "Home Page";
 }
 <div class="login-container">
-        <form asp-action="Dashboard" asp-controller="Home" method="post" class="login-form">
-            <h2>Login</h2>
-            <div class="input-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" placeholder="Enter your username" required>
-            </div>
-            <button type="submit">Submit</button>
-        </form>
+    <form asp-action="Dashboard" asp-controller="Home" method="post" class="login-form">
+        <h2>Login</h2>
+        <div class="input-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="UserName" placeholder="Enter your username" required>
+        </div>
+            
+            <input type="hidden" name="Id" value="0">
+            <input type="hidden" id="date-start" name="DateStart">
+            <input type="hidden" id="date-end" name="DateEnd">
+            <input type="hidden" id="price-start" name="AmountStart" placeholder="Enter price" min="0">
+            <input type="hidden" id="price-end" name="AmountEnd" placeholder="Enter price" min="0">
+            <input type="hidden" name="Category" placeholder="" value="All">
+            <input type="hidden" name="OrderByDateUp" placeholder="" value="All">
+            <input type="hidden" name="OrderByAmountUp" placeholder="" value="All">
+            <input type="hidden" name="DefaultFilter" placeholder="" value="true">
+            
+        <button type="submit">Submit</button>
+    </form>
 </div>

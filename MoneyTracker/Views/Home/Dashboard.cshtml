@@ -8,34 +8,51 @@
     <h2 class="balance">Balance: @Model.Result.User.Balance Сум</h2>
 
     <!-- Фильтры -->
-    <div class="filters">
-        <div class="filter-group">
-            <label for="date-filter">Date Start</label>
-            <input type="date" id="date-filter">
+    <form method="post" asp-action="ApplyFilter" asp-controller="Home">
+        <div class="filters">
+            <div class="filter-group">
+                <label for="date-start">Date Start</label>
+                <input type="date" id="date-start" name="DateStart">
+            </div>
+            <div class="filter-group">
+                <label for="date-end">Date End</label>
+                <input type="date" id="date-end" name="DateEnd">
+            </div>
+            <div class="filter-group">
+                <label for="price-start">Price Start</label>
+                <input type="number" id="price-start" name="AmountStart" placeholder="Enter price" min="0"> 
+            </div>
+            <div class="filter-group">
+                <label for="price-end">Price End</label>
+                <input type="number" id="price-end" name="AmountEnd" placeholder="Enter price" min="0">
+            </div>
+            <div class="filter-group">
+                <label for="category">Category</label>
+                <select id="category" name="Category">
+                    <option value="All">All</option>
+                    <option value="Income">Income</option>
+                    <option value="Expense">Expense</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="orderby-date">Order by Date</label>
+                <select id="orderby-date" name="OrderByDateUp">
+                    <option value="false">По убыванию</option>
+                    <option value="true">По возрастанию</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="orderby-amount">Order by Amount</label>
+                <select id="orderby-amount" name="OrderByAmountUp">
+                    <option value="false">По убыванию</option>
+                    <option value="true">По возрастанию</option>
+                </select>
+            </div>
+            <input type="hidden" name="UserId" value="@Model.Result.User.Id">
+            <button class="filter-btn" id="filter-button" type="submit">Apply Filters</button>
         </div>
-        <div class="filter-group">
-            <label for="date-filter">Date End</label>
-            <input type="date" id="date-filter">
-        </div>
-        <div class="filter-group">
-            <label for="price-filter">Price Start</label>
-            <input type="number" id="price-filter" placeholder="Enter price">
-        </div>
-        <div class="filter-group">
-            <label for="price-filter">Price End</label>
-            <input type="number" id="price-filter" placeholder="Enter price">
-        </div>
-        <div class="filter-group">
-            <label for="category-filter">Category</label>
-            <select id="category-filter">
-                <option value="all">All</option>
-                <option value="income">Income</option>
-                <option value="expense">Expense</option>
-            </select>
-        </div>
-        <button class="filter-btn" id="filter-button">Apply Filters</button>
-    </div>
-
+    </form>
+    
     <!-- Таблица с транзакциями -->
     <table class="transactions-table">
         <thead>
@@ -48,43 +65,77 @@
             </tr>
         </thead>
         <tbody>
-            <!-- Пример транзакции -->
-            @foreach (var transaction in Model.Result.Incomes)
-            {
-                <tr>
-                    <td>@transaction.Date.ToString("yyyy-MM-dd")</td>
-                    <td>@transaction.Category</td>
-                    <td>@transaction.Price.ToString(" Cум")</td>
-                    <td>@transaction.Comment</td>
-                    <td>
-                        <button class="action-btn update-btn">Update</button>
-                        <button class="action-btn delete-btn">Delete</button>
-                    </td>
-                </tr>
+            @if(Model.Result.Incomes != null){
+                @foreach (var transaction in Model.Result.Incomes)
+                {
+                    <tr>
+                        <td>@transaction.Date.ToString("yyyy-MM-dd")</td>
+                        <td>@transaction.Category</td>
+                        <td>@transaction.Price.ToString(" Cум")</td>
+                        <td>@transaction.Comment</td>
+                        <td>
+                            <form method="post" asp-action="UpdateIncome" asp-controller="Home" style="display:inline;>
+                                <input type="hidden" name="TransactionId" value="@transaction.Id">
+                                <input type="hidden" name="TransactionId" value="@transaction.Category">
+                                <button type="submit" class="action-btn update-btn">Update</button>
+                            </form>
+                            <form method="post" asp-action="DeleteIncome" asp-controller="Home" style="display:inline;">
+                                <input type="hidden" name="TransactionId" value="@transaction.Id">
+                                <input type="hidden" name="TransactionId" value="@transaction.Category">
+                                <button type="submit" class="action-btn delete-btn">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
             }
-            @foreach (var transaction in Model.Result.Expenses)
+            @if (Model.Result.Expenses != null)
             {
-                <tr>
-                    <td>@transaction.Date.ToString("yyyy-MM-dd")</td>
-                    <td>@transaction.Category</td>
-                    <td>@transaction.Price.ToString(" Cум")</td>
-                    <td>@transaction.Comment</td>
-                    <td>
-                        <button class="action-btn update-btn">Update</button>
-                        <button class="action-btn delete-btn">Delete</button>
-                    </td>
-                </tr>
+                @foreach (var transaction in Model.Result.Expenses)
+                {
+                    <tr>
+                        <td>@transaction.Date.ToString("yyyy-MM-dd")</td>
+                        <td>@transaction.Category</td>
+                        <td>@transaction.Price.ToString(" Cум")</td>
+                        <td>@transaction.Comment</td>
+                        <td>
+                            <form method="post" asp-action="UpdateExpense" asp-controller="Home" style="display:inline;>
+                                <input type="hidden" name="TransactionId" value="@transaction.Id">
+                                <input type="hidden" name="TransactionId" value="@transaction.Category">
+                                <button type="submit" class="action-btn update-btn">Update</button>
+                            </form>
+                            <form method="post" asp-action="DeleteExpense" asp-controller="Home" style="display:inline;">
+                                <input type="hidden" name="TransactionId" value="@transaction.Id">
+                                <input type="hidden" name="TransactionId" value="@transaction.Category">
+                                <button type="submit" class="action-btn delete-btn">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
             }
-            <tr>
-                <td>2024-09-25</td>
-                <td>Expense</td>
-                <td>$200</td>
-                <td>New laptop</td>
-                <td>
-                    <button class="action-btn update-btn">Update</button>
-                    <button class="action-btn delete-btn">Delete</button>
-                </td>
-            </tr>
+            @if (Model.Result.BaseTransactions != null)
+            {
+                @foreach (var transaction in Model.Result.BaseTransactions)
+                {
+                    <tr>
+                        <td>@transaction.Date.ToString("yyyy-MM-dd")</td>
+                        <td>@transaction.Category</td>
+                        <td>@transaction.Price.ToString(" Cум")</td>
+                        <td>@transaction.Comment</td>
+                        <td>
+                            <form method="post" asp-action="UpdateBaseTransactions" asp-controller="Home" style="display:inline;>
+                                <input type="hidden" name="TransactionId" value="@transaction.Id"> 
+                                <input type="hidden" name="TransactionId" value="@transaction.Category"> 
+                                <button type="submit" class="action-btn update-btn">Update</button>
+                            </form>
+                            <form method="post" asp-action="DeleteBaseTransactions" asp-controller="Home" style="display:inline;">
+                                <input type="hidden" name="TransactionId" value="@transaction.Id"> 
+                                <input type="hidden" name="TransactionId" value="@transaction.Category"> 
+                                <button type="submit" class="action-btn delete-btn">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            }
             <!-- Другие транзакции будут добавлены динамически -->
         </tbody>
     </table>

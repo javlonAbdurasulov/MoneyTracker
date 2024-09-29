@@ -1,4 +1,5 @@
 ﻿using MoneyTracker.Application.Interfaces.Service;
+using MoneyTracker.Domain.Models.DTO;
 using MoneyTracker.Domain.Models.Entity;
 using System;
 using System.Collections.Generic;
@@ -50,6 +51,11 @@ namespace MoneyTracker.Infrastructure.Filter
         public List<Expense> EndFilter(IQueryable<Expense> queryable)
         {
             return queryable.ToList();
+        }
+
+        public IQueryable<TransactionListDTO> MargeCategory()
+        {
+            throw new NotImplementedException();
         }
     }
 }

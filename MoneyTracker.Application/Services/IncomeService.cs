@@ -17,7 +17,7 @@ namespace MoneyTracker.Application.Services
         private readonly IUserService _userService;
         private readonly IFilterService<Income> _filterIncomeService;
 
-        public IncomeService(IIncomeRepository incomeRepository, IUserService userService, IFilterService<Income> filterIncomeService, IFilterService<Expense> filterExpenseService, IFilterService<BaseTransaction> filterAllService)
+        public IncomeService(IIncomeRepository incomeRepository, IUserService userService, IFilterService<Income> filterIncomeService)
         {
             _incomeRepository = incomeRepository;
             _userService = userService;

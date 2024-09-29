@@ -1,4 +1,5 @@
-﻿using MoneyTracker.Domain.Models;
+﻿using MoneyTracker.Application.Interfaces.Repository;
+using MoneyTracker.Domain.Models;
 using MoneyTracker.Domain.Models.DTO;
 using MoneyTracker.Domain.Models.Entity;
 using System;
@@ -9,9 +10,8 @@ using System.Threading.Tasks;
 
 namespace MoneyTracker.Application.Interfaces.Service
 {
-    public interface IUserService
+    public interface IBaseTransactionService
     {
-        public Task<ResponseModel<User>> LoginAsync(string UserName);
-        public Task<ResponseModel<User>> UpdateBalanceAsync(int userId, decimal amountMinus, decimal amountPlus);
+        public Task<ResponseModel<List<TransactionListDTO>>> ApplyFilterBaseTransactions(MoneyFilterDTO moneyFilterDTO);
     }
 }
