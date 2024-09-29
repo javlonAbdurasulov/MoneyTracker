@@ -6,29 +6,34 @@
 <div class="container">
     <h1>Money Tracker: @Model.Result.User.UserName</h1>
     <h2 class="balance">Balance: @Model.Result.User.Balance Сум</h2>
-
+    <form method="get" asp-action="CreateMoney" asp-controller="Home">
+        <input type="hidden"  name="UserName" value="@Model.Result.User.UserName">
+        <input type="hidden"  name="DefaultFilter" value="true">
+        <input type="hidden"  name="UserId" value="@Model.Result.User.Id">
+        <button class="filter-btn" id="filter-button" type="submit">Create Transaction</button>
+    </form>
     <!-- Фильтры -->
-    <form method="post" asp-action="ApplyFilter" asp-controller="Home">
+    <form method="get" asp-action="Dashboard" asp-controller="Home">
         <div class="filters">
             <div class="filter-group">
                 <label for="date-start">Date Start</label>
-                <input type="date" id="date-start" name="DateStart">
+                <input type="date" id="date-start" name="MoneyFilter.DateStart">
             </div>
             <div class="filter-group">
                 <label for="date-end">Date End</label>
-                <input type="date" id="date-end" name="DateEnd">
+                <input type="date" id="date-end" name="MoneyFilter.DateEnd">
             </div>
             <div class="filter-group">
                 <label for="price-start">Price Start</label>
-                <input type="number" id="price-start" name="AmountStart" placeholder="Enter price" min="0"> 
+                <input type="number" id="price-start" name="MoneyFilter.AmountStart" placeholder="Enter price" min="0">
             </div>
             <div class="filter-group">
                 <label for="price-end">Price End</label>
-                <input type="number" id="price-end" name="AmountEnd" placeholder="Enter price" min="0">
+                <input type="number" id="price-end" name="MoneyFilter.AmountEnd" placeholder="Enter price" min="0">
             </div>
             <div class="filter-group">
                 <label for="category">Category</label>
-                <select id="category" name="Category">
+                <select id="category" name="MoneyFilter.Category">
                     <option value="All">All</option>
                     <option value="Income">Income</option>
                     <option value="Expense">Expense</option>
@@ -36,19 +41,21 @@
             </div>
             <div class="filter-group">
                 <label for="orderby-date">Order by Date</label>
-                <select id="orderby-date" name="OrderByDateUp">
+                <select id="orderby-date" name="MoneyFilter.OrderByDateUp">
                     <option value="false">По убыванию</option>
                     <option value="true">По возрастанию</option>
                 </select>
             </div>
             <div class="filter-group">
                 <label for="orderby-amount">Order by Amount</label>
-                <select id="orderby-amount" name="OrderByAmountUp">
+                <select id="orderby-amount" name="MoneyFilter.OrderByAmountUp">
                     <option value="false">По убыванию</option>
                     <option value="true">По возрастанию</option>
                 </select>
             </div>
-            <input type="hidden" name="UserId" value="@Model.Result.User.Id">
+            <input type="hidden" name="MoneyFilter.UserId" value="@Model.Result.User.Id">
+            <input type="hidden" name="UserName" value="@Model.Result.User.UserName">
+            <input type="hidden" name="DefaultFilter" value="false">
             <button class="filter-btn" id="filter-button" type="submit">Apply Filters</button>
         </div>
     </form>
@@ -74,14 +81,14 @@
                         <td>@transaction.Amount</td>
                         <td>@transaction.Comment</td>
                         <td>
-                            <form method="post" asp-action="UpdateIncome" asp-controller="Home" style="display:inline;>
-                                <input type="hidden" name="TransactionId" value="@transaction.Id">
-                                <input type="hidden" name="TransactionId" value="@transaction.Category">
+                            <form method="post" asp-action="UpdateTransactions" asp-controller="Home" style="display:inline;>
+                                <input type="hidden" name="Id" value="@transaction.Id">
+                                <input type="hidden" name="Category" value="@transaction.Category">
                                 <button type="submit" class="action-btn update-btn">Update</button>
                             </form>
-                            <form method="post" asp-action="DeleteIncome" asp-controller="Home" style="display:inline;">
-                                <input type="hidden" name="TransactionId" value="@transaction.Id">
-                                <input type="hidden" name="TransactionId" value="@transaction.Category">
+                            <form method="post" asp-action="DeleteTransactions" asp-controller="Home" style="display:inline;">
+                                <input type="hidden" name="Id" value="@transaction.Id">
+                                <input type="hidden" name="Category" value="@transaction.Category">
                                 <button type="submit" class="action-btn delete-btn">Delete</button>
                             </form>
                         </td>
@@ -98,14 +105,14 @@
                         <td>@transaction.Amount</td>
                         <td>@transaction.Comment</td>
                         <td>
-                            <form method="post" asp-action="UpdateExpense" asp-controller="Home" style="display:inline;>
-                                <input type="hidden" name="TransactionId" value="@transaction.Id">
-                                <input type="hidden" name="TransactionId" value="@transaction.Category">
+                            <form method="post" asp-action="UpdateTransactions" asp-controller="Home" style="display:inline;>
+                                <input type="hidden" name="Id" value="@transaction.Id">
+                                <input type="hidden" name="Category" value="@transaction.Category">
                                 <button type="submit" class="action-btn update-btn">Update</button>
                             </form>
-                            <form method="post" asp-action="DeleteExpense" asp-controller="Home" style="display:inline;">
-                                <input type="hidden" name="TransactionId" value="@transaction.Id">
-                                <input type="hidden" name="TransactionId" value="@transaction.Category">
+                            <form method="post" asp-action="DeleteTransactions" asp-controller="Home" style="display:inline;">
+                                <input type="hidden" name="Id" value="@transaction.Id">
+                                <input type="hidden" name="Category" value="@transaction.Category">
                                 <button type="submit" class="action-btn delete-btn">Delete</button>
                             </form>
                         </td>
@@ -122,21 +129,20 @@
                         <td>@transaction.Amount</td>
                         <td>@transaction.Comment</td>
                         <td>
-                            <form method="post" asp-action="UpdateBaseTransactions" asp-controller="Home" style="display:inline;>
-                                <input type="hidden" name="TransactionId" value="@transaction.Id"> 
-                                <input type="hidden" name="TransactionId" value="@transaction.Category"> 
+                            <form method="post" asp-action="UpdateTransactions" asp-controller="Home" style="display:inline;>
+                                <input type="hidden" name="Id" value="@transaction.Id">
+                                <input type="hidden" name="Category" value="@transaction.Category">
                                 <button type="submit" class="action-btn update-btn">Update</button>
                             </form>
-                            <form method="post" asp-action="DeleteBaseTransactions" asp-controller="Home" style="display:inline;">
-                                <input type="hidden" name="TransactionId" value="@transaction.Id"> 
-                                <input type="hidden" name="TransactionId" value="@transaction.Category"> 
+                            <form method="post" asp-action="DeleteTransactions" asp-controller="Home" style="display:inline;">
+                                <input type="hidden" name="Id" value="@transaction.Id">
+                                <input type="hidden" name="Category" value="@transaction.Category">
                                 <button type="submit" class="action-btn delete-btn">Delete</button>
                             </form>
                         </td>
                     </tr>
                 }
             }
-            <!-- Другие транзакции будут добавлены динамически -->
         </tbody>
     </table>
 </div>

@@ -59,7 +59,8 @@ namespace MoneyTracker.Application.Services
                 Amount = expenseDTO.Amount,
                 Category = expenseDTO.Category,
                 Comment = expenseDTO.Comment,
-                Date = expenseDTO.Date,
+                //
+                Date = expenseDTO.Date.ToUniversalTime(),
                 UserId = expenseDTO.UserId
             };
             var responseExpense = await _expenseRepository.CreateAsync(expense);
@@ -67,7 +68,7 @@ namespace MoneyTracker.Application.Services
             {
                 return new("ошибка при создании");
             }
-            var updatedBalanceUser = await _userService.UpdateBalanceAsync(expense.UserId, 0, expense.Amount);
+            var updatedBalanceUser = await _userService.UpdateBalanceAsync(expense.UserId, expense.Amount,0);
             if (updatedBalanceUser == null)
             {
                 return new(updatedBalanceUser.Error);
@@ -118,7 +119,7 @@ namespace MoneyTracker.Application.Services
             
             var responseExpense = await _expenseRepository.UpdateAsync(expense);
             //
-            var updatedBalanceUser = await _userService.UpdateBalanceAsync(expense.UserId, expenseById.Result.Amount, expense.Amount);
+            var updatedBalanceUser = await _userService.UpdateBalanceAsync(expense.UserId, expense.Amount, expenseById.Result.Amount);
             if (updatedBalanceUser == null)
             {
                 return new(updatedBalanceUser.Error);

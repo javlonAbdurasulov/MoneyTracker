@@ -25,7 +25,7 @@ namespace MoneyTracker.Application.Services
         {
             var query = _filterService.MargeCategory();
             var filterList = _filterService.FilterByUser(query, moneyFilterDTO.UserId);
-            filterList = _filterService.FilterByCategory(filterList, "Income");
+            
             filterList = _filterService.FilterByDate(filterList, moneyFilterDTO.DateStart, moneyFilterDTO.DateEnd);
             filterList = _filterService.FilterByAmount(filterList, moneyFilterDTO.AmountStart, moneyFilterDTO.AmountEnd);
             if (moneyFilterDTO.OrderByDateUp)

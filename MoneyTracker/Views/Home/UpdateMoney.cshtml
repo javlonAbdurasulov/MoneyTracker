@@ -1,0 +1,33 @@
+﻿@using MoneyTracker.Domain.Models
+@{
+    Layout = "/Views/Shared/_DashboardLayout.cshtml";
+}
+<h2>Update Transaction</h2>
+
+<form asp-action="UpdateTransaction" method="post">
+    <div class="input-group">
+        <label for="transaction-date">Date</label>
+        <input type="date" id="transaction-date" name="Date" value="@Model.Date.ToString("yyyy-MM-dd")" required>
+    </div>
+
+    <div class="input-group">
+        <label for="transaction-category">Category</label>
+        <select id="transaction-category" name="Category" required>
+            @* <option value="income" @(Model.Category == "income" ? "selected" : "")>Income</option>
+            <option value="expense" @(Model.Category == "expense" ? "selected" : "")>Expense</option> *@
+        </select>
+    </div>
+
+    <div class="input-group">
+        <label for="transaction-amount">Amount</label>
+        <input type="number" id="transaction-amount" name="Amount" value="@Model.Amount" required>
+    </div>
+
+    <div class="input-group">
+        <label for="transaction-comment">Comment</label>
+        <input type="text" id="transaction-comment" name="Comment" value="@Model.Comment">
+    </div>
+
+    <input type="hidden" name="Id" value="@Model.Id">
+    <button type="submit">Update</button>
+</form>

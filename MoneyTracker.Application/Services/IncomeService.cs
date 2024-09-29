@@ -59,7 +59,7 @@ namespace MoneyTracker.Application.Services
                 Amount = incomeDTO.Amount,
                 Category = incomeDTO.Category,
                 Comment = incomeDTO.Comment,
-                Date = incomeDTO.Date,
+                Date = incomeDTO.Date.ToUniversalTime(),
                 UserId = incomeDTO.UserId
             };
             var responseIncome = await _incomeRepository.CreateAsync(income); 

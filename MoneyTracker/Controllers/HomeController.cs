@@ -25,33 +25,70 @@ namespace MoneyTracker.Controllers
             _transactionService = transactionService;
         }
 
-        public IActionResult ApplyFilter(MoneyFilterDTO moneyFilterDTO)
-        { 
-            moneyFilterDTO.DateStart = moneyFilterDTO.DateStart.ToUniversalTime();
-
-            if(moneyFilterDTO.DateEnd == DateTime.MinValue)
-            {
-                moneyFilterDTO.DateEnd = DateTime.MaxValue.ToUniversalTime();
-            }
-            if(moneyFilterDTO.AmountEnd == 0)
-            {
-                moneyFilterDTO.AmountEnd = decimal.MaxValue;
-            }
-
-
-            IndexModel indexModel = new()
-            {
-                Id = moneyFilterDTO.UserId,
-                DefaultFilter = false,
-                MoneyFilter = moneyFilterDTO
-            };
-            Dashboard(indexModel);
-
-            return View();
-        }
         public IActionResult Index()
         {
             return View();
+        }
+        public async Task<IActionResult> UpdateTransaction(UpdateTransactionDTO updateTransaction)
+        {
+            if (updateTransaction.Category == "Income")
+            {
+                var income = await _incomeService.GetById(updateTransaction.Id);
+                var forUpdateIncome = _incomeService.Update(income.Result);
+                return View("CreateMoney");
+            }
+            else
+            {
+
+            }
+
+            return View();
+        }
+        public IActionResult DeleteTransaction(UpdateTransactionDTO DeleteTransaction)
+        {
+            if (DeleteTransaction.Category == "Income")
+            {
+
+            }
+            else
+            {
+
+            }
+
+            return View();
+        }
+        public IActionResult CreateMoney(PreCreateview preCreateview)
+        {
+
+            return View(preCreateview);
+        }
+        public async Task<IActionResult> AddTransactions(CreateView Createview)
+        {
+            MoneyDTO money = new MoneyDTO()
+            {
+                Amount = Createview.Amount,
+                Category = Createview.Category,
+                Comment = Createview.Comment,
+                Date = Createview.Date,
+                UserId = Createview.UserId
+            };
+
+            if (Createview.Category == "Income")
+            {
+                var res = await _incomeService.Create(money);
+            }
+            else
+            {
+                var res = await _expenseService.Create(money);
+
+            }
+
+            IndexModel indexModel = new()
+            {
+                DefaultFilter = true,
+                UserName = Createview.UserName
+            };
+            return RedirectToAction("Dashboard",indexModel);
         }
         public async Task<IActionResult> Dashboard(IndexModel indexModel)
         {
@@ -79,8 +116,21 @@ namespace MoneyTracker.Controllers
             }
             else
             {
-                indexModel.MoneyFilter.DateEnd = indexModel.MoneyFilter.DateEnd.ToUniversalTime();
                 indexModel.MoneyFilter.DateStart = indexModel.MoneyFilter.DateStart.ToUniversalTime();
+
+                if (indexModel.MoneyFilter.DateEnd == DateTime.MinValue)
+                {
+                    indexModel.MoneyFilter.DateEnd = DateTime.MaxValue.ToUniversalTime();
+                }
+                else
+                {
+                    indexModel.MoneyFilter.DateEnd = indexModel.MoneyFilter.DateEnd.ToUniversalTime();
+                }
+                if (indexModel.MoneyFilter.AmountEnd == 0)
+                {
+                    indexModel.MoneyFilter.AmountEnd = decimal.MaxValue;
+                }
+
             }
             ResponseModel<List<TransactionListDTO>> BaseTransactionList = new ResponseModel<List<TransactionListDTO>>("");
             ResponseModel<List<Income>> IncomeList = new ResponseModel<List<Income>>("");
@@ -99,9 +149,6 @@ namespace MoneyTracker.Controllers
                 ExpenseList = await _expenseService.ApplyFilter(indexModel.MoneyFilter);
             }
             
-            //Service dlya filtra BaseTransaction
-
-            //var responseIncomes = await _incomeService;
             DashboardModel responseDashModel = new DashboardModel()
             {
                 User = responseUser.Result,
