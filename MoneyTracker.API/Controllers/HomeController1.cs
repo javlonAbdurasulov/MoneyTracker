@@ -33,8 +33,8 @@ namespace MoneyTracker.API.Controllers
         {
             MoneyFilterDTO moneyFilterDTO = new MoneyFilterDTO()
             {
-                DateEnd = DateTime.MaxValue,
-                DateStart = DateTime.MinValue,
+                DateEnd = DateTime.MaxValue.ToUniversalTime(),
+                DateStart = DateTime.MinValue.ToUniversalTime(),
                 AmountStart = decimal.MinValue,
                 AmountEnd = decimal.MaxValue,
                 Category = "Income",
