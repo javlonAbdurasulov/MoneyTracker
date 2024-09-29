@@ -76,14 +76,17 @@
                         <td>@transaction.Amount</td>
                         <td>@transaction.Comment</td>
                         <td>
-                            <form method="post" asp-action="UpdateTransactions" asp-controller="Home" style="display:inline;>
+                            <form method="post" asp-action="UpdateMoney" asp-controller="Home" style="display:inline;>
+                                <input type="hidden" name="Id" value="@transaction.Id">
                                 <input type="hidden" name="Id" value="@transaction.Id">
                                 <input type="hidden" name="Category" value="@transaction.Category">
+                                <input type="hidden" name="UserName" value="@Model.Result.User.UserName">
                                 <button type="submit" class="action-btn update-btn">Update</button>
                             </form>
                             <form method="post" asp-action="DeleteTransactions" asp-controller="Home" style="display:inline;">
                                 <input type="hidden" name="Id" value="@transaction.Id">
                                 <input type="hidden" name="Category" value="@transaction.Category">
+                                <input type="hidden" name="UserName" value="@Model.Result.User.UserName">
                                 <button type="submit" class="action-btn delete-btn">Delete</button>
                             </form>
                         </td>
@@ -100,14 +103,17 @@
                         <td>@transaction.Amount</td>
                         <td>@transaction.Comment</td>
                         <td>
-                            <form method="post" asp-action="UpdateTransactions" asp-controller="Home" style="display:inline;>
+                            <form method="post" asp-action="UpdateMoney" asp-controller="Home" style="display:inline;>
+                                <input type="hidden" name="Id" value="@transaction.Id">
                                 <input type="hidden" name="Id" value="@transaction.Id">
                                 <input type="hidden" name="Category" value="@transaction.Category">
+                                <input type="hidden" name="UserName" value="@Model.Result.User.UserName">
                                 <button type="submit" class="action-btn update-btn">Update</button>
                             </form>
                             <form method="post" asp-action="DeleteTransactions" asp-controller="Home" style="display:inline;">
                                 <input type="hidden" name="Id" value="@transaction.Id">
                                 <input type="hidden" name="Category" value="@transaction.Category">
+                                <input type="hidden" name="UserName" value="@Model.Result.User.UserName">
                                 <button type="submit" class="action-btn delete-btn">Delete</button>
                             </form>
                         </td>
@@ -124,14 +130,17 @@
                         <td>@transaction.Amount</td>
                         <td>@transaction.Comment</td>
                         <td>
-                            <form method="post" asp-action="UpdateTransactions" asp-controller="Home" style="display:inline;>
+                            <form method="get" asp-action="UpdateMoney" asp-controller="Home" style="display:inline;>
+                                <input type="hidden" name="Id" value="@transaction.Id">
                                 <input type="hidden" name="Id" value="@transaction.Id">
                                 <input type="hidden" name="Category" value="@transaction.Category">
+                                <input type="hidden" name="UserName" value="@Model.Result.User.UserName">
                                 <button type="submit" class="action-btn update-btn">Update</button>
                             </form>
                             <form method="post" asp-action="DeleteTransactions" asp-controller="Home" style="display:inline;">
                                 <input type="hidden" name="Id" value="@transaction.Id">
                                 <input type="hidden" name="Category" value="@transaction.Category">
+                                <input type="hidden" name="UserName" value="@Model.Result.User.UserName">
                                 <button type="submit" class="action-btn delete-btn">Delete</button>
                             </form>
                         </td>

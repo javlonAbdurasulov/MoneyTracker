@@ -29,33 +29,104 @@ namespace MoneyTracker.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> UpdateTransaction(UpdateTransactionDTO updateTransaction)
+        public async Task<IActionResult> UpdateMoneyAsync(UpdateTransactionDTO updateTransaction)
         {
             if (updateTransaction.Category == "Income")
             {
                 var income = await _incomeService.GetById(updateTransaction.Id);
-                var forUpdateIncome = _incomeService.Update(income.Result);
-                return View("CreateMoney");
+                UpdateView updateView = new UpdateView()
+                {
+                    Amount = income.Result.Amount,
+                    Category = income.Result.Category,
+                    Comment = income.Result.Comment,
+                    Date = income.Result.Date,
+                    Id = income.Result.Id,
+                    UserId = income.Result.UserId,
+                    UserName = updateTransaction.UserName
+                };
+                return View(updateView);
             }
             else
             {
+                var expense = await _expenseService.GetById(updateTransaction.Id);
+
+                UpdateView updateView = new UpdateView()
+                {
+                    Amount = expense.Result.Amount,
+                    Category = expense.Result.Category,
+                    Comment = expense.Result.Comment,
+                    Date = expense.Result.Date,
+                    Id = expense.Result.Id,
+                    UserId = expense.Result.UserId,
+                    UserName = updateTransaction.UserName
+                };
+                return View(updateView);
+            }
+
+        }
+        public async Task<IActionResult> UpdateTransactions(UpdateView updateView)
+        {
+
+            if (updateView.Category == "Income")
+            {
+                Income income = new()
+                {
+                    Amount = updateView.Amount,
+                    Category = updateView.Category,
+                    Comment = updateView.Comment,
+                    Date = updateView.Date,
+                    Id = updateView.Id,
+                    UserId = updateView.UserId
+                };
+                var res =await _incomeService.Update(income);
+
+                IndexModel indexModel = new()
+                {
+                    DefaultFilter = true,
+                    UserName = updateView.UserName
+                };
+                return RedirectToAction("Dashboard",indexModel);
+            }
+            else
+            {
+                Expense expense= new()
+                {
+                    Amount = updateView.Amount,
+                    Category = updateView.Category,
+                    Comment = updateView.Comment,
+                    Date = updateView.Date,
+                    Id = updateView.Id,
+                    UserId = updateView.UserId
+                };
+                var res = await _expenseService.Update(expense);
+
+                IndexModel indexModel = new()
+                {
+                    DefaultFilter = true,
+                    UserName = updateView.UserName
+                };
+                return RedirectToAction("Dashboard", indexModel);
 
             }
 
-            return View();
         }
-        public IActionResult DeleteTransaction(UpdateTransactionDTO DeleteTransaction)
+        public async Task<IActionResult> DeleteTransaction(UpdateTransactionDTO DeleteTransaction)
         {
             if (DeleteTransaction.Category == "Income")
             {
-
+                await _incomeService.Delete(DeleteTransaction.Id);
             }
             else
             {
+                await _expenseService.Delete(DeleteTransaction.Id);
 
             }
-
-            return View();
+            IndexModel indexModel = new()
+            {
+                DefaultFilter = true,
+                UserName = DeleteTransaction.UserName
+            };
+            return RedirectToAction("Dashboard",indexModel);
         }
         public IActionResult CreateMoney(PreCreateview preCreateview)
         {
@@ -137,7 +208,7 @@ namespace MoneyTracker.Controllers
 
             if (indexModel.MoneyFilter.Category == "All")
             {
-                BaseTransactionList =await _transactionService.ApplyFilterBaseTransactions(indexModel.MoneyFilter);
+                BaseTransactionList = await _transactionService.ApplyFilterBaseTransactions(indexModel.MoneyFilter);
             }
             else if(indexModel.MoneyFilter.Category == "Income")
             {

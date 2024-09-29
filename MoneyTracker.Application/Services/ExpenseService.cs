@@ -27,28 +27,28 @@ namespace MoneyTracker.Application.Services
         public async Task<ResponseModel<List<Expense>>> ApplyFilter(MoneyFilterDTO expenseFilterDTO)
         {
             var query = _expenseRepository.GetQueryable();
-            var filterList = _filterExpenseService.FilterByUser(query, expenseFilterDTO.UserId);
-            filterList = _filterExpenseService.FilterByCategory(filterList, "Expense");
-            filterList = _filterExpenseService.FilterByDate(filterList, expenseFilterDTO.DateStart, expenseFilterDTO.DateEnd);
-            filterList = _filterExpenseService.FilterByAmount(filterList, expenseFilterDTO.AmountStart, expenseFilterDTO.AmountEnd);
+            var filterList = await _filterExpenseService.FilterByUser(query, expenseFilterDTO.UserId);
+            filterList = await _filterExpenseService.FilterByCategory(filterList, "Expense");
+            filterList = await _filterExpenseService.FilterByDate(filterList, expenseFilterDTO.DateStart, expenseFilterDTO.DateEnd);
+            filterList = await _filterExpenseService.FilterByAmount(filterList, expenseFilterDTO.AmountStart, expenseFilterDTO.AmountEnd);
             if (expenseFilterDTO.OrderBy == 1)
             {
-                filterList = _filterExpenseService.OrderByDateUp(filterList);
+                filterList = await _filterExpenseService.OrderByDateUp(filterList);
             }
             else if (expenseFilterDTO.OrderBy == 2)
             {
-                filterList = _filterExpenseService.OrderByDateDown(filterList);
+                filterList = await _filterExpenseService.OrderByDateDown(filterList);
             }
             else if (expenseFilterDTO.OrderBy == 3)
             {
-                filterList = _filterExpenseService.OrderByAmountUp(filterList);
+                filterList = await _filterExpenseService.OrderByAmountUp(filterList);
             }
             else
             {
-                filterList = _filterExpenseService.OrderByAmountDown(filterList);
+                filterList = await _filterExpenseService.OrderByAmountDown(filterList);
             }
 
-            var res = _filterExpenseService.EndFilter(filterList);
+            var res = await _filterExpenseService.EndFilter(filterList);
             return new(res);
         }
 

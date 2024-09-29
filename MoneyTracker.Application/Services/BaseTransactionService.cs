@@ -23,29 +23,29 @@ namespace MoneyTracker.Application.Services
 
         public async Task<ResponseModel<List<TransactionListDTO>>> ApplyFilterBaseTransactions(MoneyFilterDTO moneyFilterDTO)
         {
-            var query = _filterService.MargeCategory();
-            var filterList = _filterService.FilterByUser(query, moneyFilterDTO.UserId);
+            var query = await _filterService.MargeCategory();
+            var filterList = await _filterService.FilterByUser(query, moneyFilterDTO.UserId);
             
-            filterList = _filterService.FilterByDate(filterList, moneyFilterDTO.DateStart, moneyFilterDTO.DateEnd);
-            filterList = _filterService.FilterByAmount(filterList, moneyFilterDTO.AmountStart, moneyFilterDTO.AmountEnd);
+            filterList = await _filterService.FilterByDate(filterList, moneyFilterDTO.DateStart, moneyFilterDTO.DateEnd);
+            filterList = await _filterService.FilterByAmount(filterList, moneyFilterDTO.AmountStart, moneyFilterDTO.AmountEnd);
             if (moneyFilterDTO.OrderBy == 1)
             {
-                filterList = _filterService.OrderByDateUp(filterList);
+                filterList = await _filterService.OrderByDateUp(filterList);
             }
             else if (moneyFilterDTO.OrderBy == 2)
             {
-                filterList = _filterService.OrderByDateDown(filterList);
+                filterList = await _filterService.OrderByDateDown(filterList);
             }
             else if (moneyFilterDTO.OrderBy == 3)
             {
-                filterList = _filterService.OrderByAmountUp(filterList);
+                filterList = await _filterService.OrderByAmountUp(filterList);
             }
             else
             {
-                filterList = _filterService.OrderByAmountDown(filterList);
+                filterList = await _filterService.OrderByAmountDown(filterList);
             }
 
-            var res = _filterService.EndFilter(filterList);
+            var res = await _filterService.EndFilter(filterList);
             return new(res);
         }
     }

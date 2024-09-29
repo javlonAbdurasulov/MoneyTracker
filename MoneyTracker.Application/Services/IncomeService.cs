@@ -27,27 +27,27 @@ namespace MoneyTracker.Application.Services
         public async Task<ResponseModel<List<Income>>> ApplyFilter(MoneyFilterDTO incomeFilterDTO)
         {
             var query = _incomeRepository.GetQueryable();
-            var filterList = _filterIncomeService.FilterByUser(query, incomeFilterDTO.UserId);  
-            filterList = _filterIncomeService.FilterByCategory(filterList, "Income"); 
-            filterList = _filterIncomeService.FilterByDate(filterList, incomeFilterDTO.DateStart, incomeFilterDTO.DateEnd);
-            filterList = _filterIncomeService.FilterByAmount(filterList, incomeFilterDTO.AmountStart, incomeFilterDTO.AmountEnd);
+            var filterList = await _filterIncomeService.FilterByUser(query, incomeFilterDTO.UserId);  
+            filterList = await _filterIncomeService.FilterByCategory(filterList, "Income"); 
+            filterList = await _filterIncomeService.FilterByDate(filterList, incomeFilterDTO.DateStart, incomeFilterDTO.DateEnd);
+            filterList = await _filterIncomeService.FilterByAmount(filterList, incomeFilterDTO.AmountStart, incomeFilterDTO.AmountEnd);
             if (incomeFilterDTO.OrderBy==1)
             {
-                filterList = _filterIncomeService.OrderByDateUp(filterList);
+                filterList = await _filterIncomeService.OrderByDateUp(filterList);
             }else if (incomeFilterDTO.OrderBy == 2)
             {
-                filterList = _filterIncomeService.OrderByDateDown(filterList);
+                filterList = await _filterIncomeService.OrderByDateDown(filterList);
             }
             else if (incomeFilterDTO.OrderBy == 3)
             {
-                filterList = _filterIncomeService.OrderByAmountUp(filterList);
+                filterList = await _filterIncomeService.OrderByAmountUp(filterList);
             }
             else
             {
-                filterList = _filterIncomeService.OrderByAmountDown(filterList);
+                filterList = await _filterIncomeService.OrderByAmountDown(filterList);
             }
 
-            var res = _filterIncomeService.EndFilter(filterList);
+            var res = await _filterIncomeService.EndFilter(filterList);
             return new(res);
         }
 

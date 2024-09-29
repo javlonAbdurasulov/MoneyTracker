@@ -8,7 +8,8 @@ namespace MoneyTracker.Domain.Models.DTO
 {
     public class UpdateTransactionDTO
     {
-        public int Id { get; set; }
+        public int Id{ get; set; }
         public string Category{ get; set; }
+        public string UserName{ get; set; }
     }
 }

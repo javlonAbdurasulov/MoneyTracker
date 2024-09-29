@@ -1,26 +1,35 @@
-﻿@using MoneyTracker.Domain.Models
+﻿@using MoneyTracker.Domain.Models.DTO;
+@model UpdateView;
 @{
-    Layout = "/Views/Shared/_DashboardLayout.cshtml";
+    Layout = "/Views/Shared/_UpdateTransactionLayout.cshtml";
 }
 <h2>Update Transaction</h2>
 
-<form asp-action="UpdateTransaction" method="post">
+<form asp-action="UpdateTransactions" method="get">
     <div class="input-group">
         <label for="transaction-date">Date</label>
         <input type="date" id="transaction-date" name="Date" value="@Model.Date.ToString("yyyy-MM-dd")" required>
     </div>
-
+    
     <div class="input-group">
         <label for="transaction-category">Category</label>
-        <select id="transaction-category" name="Category" required>
-            @* <option value="income" @(Model.Category == "income" ? "selected" : "")>Income</option>
-            <option value="expense" @(Model.Category == "expense" ? "selected" : "")>Expense</option> *@
-        </select>
+        @if(@Model.Category == "Income"){
+            <select id="transaction-category" name="Category" disabled required>
+                <option value="Income" selected>Income</option>
+                <option value="Expense">Expense</option>
+            </select>
+        }
+        else{
+            <select id="transaction-category" name="Category" disabled required>
+                <option value="Expense" selected>Expense</option>
+                <option value="Income" >Income</option>
+            </select>
+        }
     </div>
 
     <div class="input-group">
         <label for="transaction-amount">Amount</label>
-        <input type="number" id="transaction-amount" name="Amount" value="@Model.Amount" required>
+        <input type="number" id="transaction-amount"  name="Amount" value="@Model.Amount" required>
     </div>
 
     <div class="input-group">
@@ -29,5 +38,8 @@
     </div>
 
     <input type="hidden" name="Id" value="@Model.Id">
+    <input type="hidden" name="UserId" value="@Model.UserId">
+    <input type="hidden" name="Category" value="@Model.Category">
+    <input type="hidden" name="UserName" value="@Model.UserName">
     <button type="submit">Update</button>
 </form>
