@@ -71,7 +71,7 @@
                     <tr>
                         <td>@transaction.Date.ToString("yyyy-MM-dd")</td>
                         <td>@transaction.Category</td>
-                        <td>@transaction.Price.ToString(" Cум")</td>
+                        <td>@transaction.Amount.ToString(" Cум")</td>
                         <td>@transaction.Comment</td>
                         <td>
                             <form method="post" asp-action="UpdateIncome" asp-controller="Home" style="display:inline;>
@@ -95,7 +95,7 @@
                     <tr>
                         <td>@transaction.Date.ToString("yyyy-MM-dd")</td>
                         <td>@transaction.Category</td>
-                        <td>@transaction.Price.ToString(" Cум")</td>
+                        <td>@transaction.Amount.ToString(" Cум")</td>
                         <td>@transaction.Comment</td>
                         <td>
                             <form method="post" asp-action="UpdateExpense" asp-controller="Home" style="display:inline;>
@@ -119,7 +119,7 @@
                     <tr>
                         <td>@transaction.Date.ToString("yyyy-MM-dd")</td>
                         <td>@transaction.Category</td>
-                        <td>@transaction.Price.ToString(" Cум")</td>
+                        <td>@transaction.Amount.ToString(" Cум")</td>
                         <td>@transaction.Comment</td>
                         <td>
                             <form method="post" asp-action="UpdateBaseTransactions" asp-controller="Home" style="display:inline;>
