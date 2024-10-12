@@ -8,6 +8,7 @@ namespace MoneyTracker.Domain.Models.DTO
 {
     public class CreateView
     {
+        //
         public DateTime Date { get; set; }
         public string Category { get; set; }
         public decimal Amount { get; set; }
