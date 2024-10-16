@@ -20,7 +20,7 @@ namespace MoneyTracker.Infrastructure.Data
         }
         
         public DbSet<User> Users {  get; set; }
-        public DbSet<Income> Incomes {  get; set; }
+        public DbSet<Transaction> Transactions{  get; set; }
         public DbSet<Expense> Expense {  get; set; }
 
         

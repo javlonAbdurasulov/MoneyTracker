@@ -20,8 +20,7 @@ namespace MoneyTracker.Domain.Models.Entity
         public int Id { get; set; }
         public string UserName { get; set; }
         public decimal Balance{ get; set; }
-        public List<Income> Incomes { get; set; }=new List<Income>();
-        public List<Expense> Expenses { get; set; } = new List<Expense>();
+        public List<Transaction> Transactions{ get; set; } = new List<Transaction>();
 
     }
 }

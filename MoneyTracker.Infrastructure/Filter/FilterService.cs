@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace MoneyTracker.Infrastructure.Filter
 {
-    public class FilterService : IFilterService<TransactionListDTO> 
+    public class FilterService : IFilterService<Transaction> 
     {
         private readonly IIncomeRepository _incomeRepository;
         private readonly IExpenseRepository _expenseRepository;
@@ -22,71 +22,44 @@ namespace MoneyTracker.Infrastructure.Filter
             _expenseRepository = expenseRepository;
         }
 
-        public async Task<IQueryable<TransactionListDTO>> FilterByUser(IQueryable<TransactionListDTO> queryable, int userId)
+        public async Task<IQueryable<Transaction>> FilterByUser(IQueryable<Transaction> queryable, int userId)
         {
             return queryable.Where(x => x.UserId == userId);
         }
-        public async Task<IQueryable<TransactionListDTO>> FilterByDate(IQueryable<TransactionListDTO> queryable, DateTime startDate, DateTime endDate)
+        public async Task<IQueryable<Transaction>> FilterByDate(IQueryable<Transaction> queryable, DateTime startDate, DateTime endDate)
         {
             return queryable.Where(t => t.Date.Date >= startDate.Date && t.Date.Date <= endDate.Date);
         }
-        public async Task<IQueryable<TransactionListDTO>> FilterByCategory(IQueryable<TransactionListDTO> queryable, string category)
+        public async Task<IQueryable<Transaction>> FilterByCategory(IQueryable<Transaction> queryable, Category category)
         {
             return queryable.Where(t => t.Category == category);
         }
 
-        public async Task<IQueryable<TransactionListDTO>> OrderByDateUp(IQueryable<TransactionListDTO> queryable)
+        public async Task<IQueryable<Transaction>> OrderByDateUp(IQueryable<Transaction> queryable)
         {
             return queryable.OrderBy(t => t.Date);
         }
 
-        public async Task<IQueryable<TransactionListDTO>> OrderByDateDown(IQueryable<TransactionListDTO> queryable)
+        public async Task<IQueryable<Transaction>> OrderByDateDown(IQueryable<Transaction> queryable)
         {
             return queryable.OrderByDescending(t => t.Date);
         }
 
-        public async Task<IQueryable<TransactionListDTO>> FilterByAmount(IQueryable<TransactionListDTO> queryable, decimal start, decimal end)
+        public async Task<IQueryable<Transaction>> FilterByAmount(IQueryable<Transaction> queryable, decimal start, decimal end)
         {
             return queryable.Where(t => t.Amount >= start && t.Amount<= end);
         }
 
-        public async Task<IQueryable<TransactionListDTO>> OrderByAmountUp(IQueryable<TransactionListDTO> queryable)
+        public async Task<IQueryable<Transaction>> OrderByAmountUp(IQueryable<Transaction> queryable)
         {
             return queryable.OrderBy(t => t.Amount);
         }
 
-        public async Task<IQueryable<TransactionListDTO>> OrderByAmountDown(IQueryable<TransactionListDTO> queryable)
+        public async Task<IQueryable<Transaction>> OrderByAmountDown(IQueryable<Transaction> queryable)
         {
             return queryable.OrderByDescending(t => t.Amount);
         }
-
-        public async Task<IQueryable<TransactionListDTO>> MargeCategory()
-        {
-
-            var incomes = _incomeRepository.GetQueryable().Select(i => new TransactionListDTO()
-            {
-                Amount = i.Amount,
-                Category = i.Category,
-                Comment = i.Comment,
-                Date = i.Date,
-                Id = i.Id,
-                UserId = i.UserId
-            });
-            var expenses = _expenseRepository.GetQueryable().Select(i => new TransactionListDTO()
-            {
-                Amount = i.Amount,
-                Category = i.Category,
-                Comment = i.Comment,
-                Date = i.Date,
-                Id = i.Id,
-                UserId = i.UserId
-            });
-            var transactions = incomes.Concat(expenses);
-            //var transactions = incomes.Cast<BaseTransaction>()
-            //                          .Union(expenses.Cast<BaseTransaction>());
-            return transactions;
-        }
-        public async Task<List<TransactionListDTO>> EndFilter(IQueryable<TransactionListDTO> queryable)
+        public async Task<List<Transaction>> EndFilter(IQueryable<Transaction> queryable)
         {
             return await queryable.ToListAsync();
         }
