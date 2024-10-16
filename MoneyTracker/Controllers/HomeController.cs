@@ -186,6 +186,7 @@ namespace MoneyTracker.Controllers
             }
             else
             {
+                //addDays()
                 indexModel.MoneyFilter.DateStart = indexModel.MoneyFilter.DateStart.ToUniversalTime();
 
                 if (indexModel.MoneyFilter.DateEnd == DateTime.MinValue)

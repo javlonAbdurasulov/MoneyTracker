@@ -15,44 +15,13 @@
     <!-- Фильтры -->
     <form method="get" asp-action="Dashboard" asp-controller="Home">
         <div class="filters">
-            <div class="filter-group">
-                <label for="date-start">Date Start</label>
-                <input type="date" id="date-start" name="MoneyFilter.DateStart">
-            </div>
-            <div class="filter-group">
-                <label for="date-end">Date End</label>
-                <input type="date" id="date-end" name="MoneyFilter.DateEnd">
-            </div>
-            <div class="filter-group">
-                <label for="price-start">Price Start</label>
-                <input type="number" id="price-start" name="MoneyFilter.AmountStart" placeholder="Enter price" min="0">
-            </div>
-            <div class="filter-group">
-                <label for="price-end">Price End</label>
-                <input type="number" id="price-end" name="MoneyFilter.AmountEnd" placeholder="Enter price" min="0">
-            </div>
-            <div class="filter-group">
-                <label for="category">Category</label>
-                <select id="category" name="MoneyFilter.Category">
-                    <option value="All">All</option>
-                    <option value="Income">Income</option>
-                    <option value="Expense">Expense</option>
-                </select>
-            </div>
-            <div class="filter-group">
-                <label for="orderby-amount">Order by </label>
-                <select id="orderby-amount" name="MoneyFilter.OrderBy">
-                    <option value="2">По убыванию Даты</option>
-                    <option value="1">По возрастанию Даты</option>
-                    <option value="3">По возрастанию Суммы</option>
-                    <option value="4">По убыванию Суммы</option>
-                </select>
-            </div>
-            <input type="hidden" name="MoneyFilter.UserId" value="@Model.Result.User.Id">
             <input type="hidden" name="UserName" value="@Model.Result.User.UserName">
-            <input type="hidden" name="DefaultFilter" value="false">
-            <button class="filter-btn" id="filter-button" type="submit">Apply Filters</button>
+            <input type="hidden" name="DefaultFilter" value="true">
+            <button class="filter-btn" id="filter-button" type="submit">Reset Filters</button>
         </div>
+    </form>
+    <form method="get" asp-action="Dashboard" asp-controller="Home">
+
     </form>
     
     <!-- Таблица с транзакциями -->
