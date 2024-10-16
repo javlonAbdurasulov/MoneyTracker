@@ -23,7 +23,7 @@ namespace MoneyTracker.Infrastructure.Filter
         }
         public async Task<IQueryable<Transaction>> FilterByCategory(IQueryable<Transaction> queryable, Category category)
         {
-            return queryable.Where(t => t.Category == category);
+            return queryable.Where(t => t.Category.Name == category.Name);
         }
 
         public async Task<IQueryable<Transaction>> OrderByDateUp(IQueryable<Transaction> queryable)
@@ -52,7 +52,7 @@ namespace MoneyTracker.Infrastructure.Filter
         }
         public async Task<List<Transaction>> EndFilter(IQueryable<Transaction> queryable)
         {
-            return await queryable.ToListAsync();
+            return await queryable.Include(x=>x.Category).ToListAsync();
         }
 
     }

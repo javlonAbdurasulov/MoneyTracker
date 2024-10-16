@@ -67,70 +67,16 @@
             </tr>
         </thead>
         <tbody>
-            @if(Model.Result.Incomes != null){
-                @foreach (var transaction in Model.Result.Incomes)
+            @if(Model.Result.Transactions != null){
+                @foreach (var transaction in Model.Result.Transactions)
                 {
                     <tr>
                         <td>@transaction.Date.ToString("yyyy-MM-dd")</td>
-                        <td>@transaction.Category</td>
+                        <td>@transaction.Category.Name</td>
                         <td>@transaction.Amount</td>
                         <td>@transaction.Comment</td>
                         <td>
                             <form method="post" asp-action="UpdateMoney" asp-controller="Home" style="display:inline;>
-                                <input type="hidden" name="Id" value="@transaction.Id">
-                                <input type="hidden" name="Id" value="@transaction.Id">
-                                <input type="hidden" name="Category" value="@transaction.Category">
-                                <input type="hidden" name="UserName" value="@Model.Result.User.UserName">
-                                <button type="submit" class="action-btn update-btn">Update</button>
-                            </form>
-                            <form method="post" asp-action="DeleteTransactions" asp-controller="Home" style="display:inline;">
-                                <input type="hidden" name="Id" value="@transaction.Id">
-                                <input type="hidden" name="Category" value="@transaction.Category">
-                                <input type="hidden" name="UserName" value="@Model.Result.User.UserName">
-                                <button type="submit" class="action-btn delete-btn">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
-                }
-            }
-            @if (Model.Result.Expenses != null)
-            {
-                @foreach (var transaction in Model.Result.Expenses)
-                {
-                    <tr>
-                        <td>@transaction.Date.ToString("yyyy-MM-dd")</td>
-                        <td>@transaction.Category</td>
-                        <td>@transaction.Amount</td>
-                        <td>@transaction.Comment</td>
-                        <td>
-                            <form method="post" asp-action="UpdateMoney" asp-controller="Home" style="display:inline;>
-                                <input type="hidden" name="Id" value="@transaction.Id">
-                                <input type="hidden" name="Id" value="@transaction.Id">
-                                <input type="hidden" name="Category" value="@transaction.Category">
-                                <input type="hidden" name="UserName" value="@Model.Result.User.UserName">
-                                <button type="submit" class="action-btn update-btn">Update</button>
-                            </form>
-                            <form method="post" asp-action="DeleteTransactions" asp-controller="Home" style="display:inline;">
-                                <input type="hidden" name="Id" value="@transaction.Id">
-                                <input type="hidden" name="Category" value="@transaction.Category">
-                                <input type="hidden" name="UserName" value="@Model.Result.User.UserName">
-                                <button type="submit" class="action-btn delete-btn">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
-                }
-            }
-            @if (Model.Result.BaseTransactions != null)
-            {
-                @foreach (var transaction in Model.Result.BaseTransactions)
-                {
-                    <tr>
-                        <td>@transaction.Date.ToString("yyyy-MM-dd")</td>
-                        <td>@transaction.Category</td>
-                        <td>@transaction.Amount</td>
-                        <td>@transaction.Comment</td>
-                        <td>
-                            <form method="get" asp-action="UpdateMoney" asp-controller="Home" style="display:inline;>
                                 <input type="hidden" name="Id" value="@transaction.Id">
                                 <input type="hidden" name="Id" value="@transaction.Id">
                                 <input type="hidden" name="Category" value="@transaction.Category">
