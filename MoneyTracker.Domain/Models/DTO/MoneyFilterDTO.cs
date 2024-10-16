@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MoneyTracker.Domain.Models.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace MoneyTracker.Domain.Models.DTO
     {
         public DateTime DateStart { get; set; }
         public DateTime DateEnd { get; set; }
-        public string Category { get; set; }
+        public Category Category { get; set; }
         public decimal AmountStart { get; set; }
         public decimal AmountEnd { get; set; }
         public byte OrderBy{ get; set; }

@@ -37,9 +37,8 @@ namespace MoneyTracker.Infrastructure.AppConfiguration
             services.AddScoped<IExpenseService, ExpenseService>();
             services.AddScoped<IBaseTransactionService, BaseTransactionService>();
 
-            services.AddScoped<IFilterService<Income>, FilterIncomeService>();
-            services.AddScoped<IFilterService<Expense>, FilterExpenseService>();
-            services.AddScoped<IFilterService<TransactionListDTO>, FilterService>();
+            //filter
+            services.AddScoped<IFilterService, FilterService>();
             
         }
     }

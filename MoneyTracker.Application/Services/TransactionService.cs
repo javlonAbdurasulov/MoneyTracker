@@ -15,40 +15,40 @@ namespace MoneyTracker.Application.Services
     {
         private readonly ITransactionRepository _transactionRepository;
         private readonly IUserService _userService;
-        private readonly IFilterService<Income> _filterIncomeService;
+        private readonly IFilterService _filterService;
 
-        public TransactionService(ITransactionRepository transactionRepository, IUserService userService, IFilterService<Income> filterIncomeService)
+        public TransactionService(ITransactionRepository transactionRepository, IUserService userService, IFilterService filterIncomeService)
         {
             _transactionRepository = transactionRepository;
             _userService = userService;
-            _filterIncomeService = filterIncomeService;
+            _filterService = filterIncomeService;
         }
 
         public async Task<ResponseModel<List<Transaction>>> ApplyFilter(MoneyFilterDTO transactionFilterDTO)
         {
             var query = _transactionRepository.GetQueryable();
-            var filterList = await _filterIncomeService.FilterByUser(query, transactionFilterDTO.UserId);
-            filterList = await _filterIncomeService.FilterByCategory(filterList, transactionFilterDTO.Category);
-            filterList = await _filterIncomeService.FilterByDate(filterList, transactionFilterDTO.DateStart, transactionFilterDTO.DateEnd);
-            filterList = await _filterIncomeService.FilterByAmount(filterList, transactionFilterDTO.AmountStart, transactionFilterDTO.AmountEnd);
+            var filterList = await _filterService.FilterByUser(query, transactionFilterDTO.UserId);
+            filterList = await _filterService.FilterByCategory(filterList, transactionFilterDTO.Category);
+            filterList = await _filterService.FilterByDate(filterList, transactionFilterDTO.DateStart, transactionFilterDTO.DateEnd);
+            filterList = await _filterService.FilterByAmount(filterList, transactionFilterDTO.AmountStart, transactionFilterDTO.AmountEnd);
             if (transactionFilterDTO.OrderBy == 1)
             {
-                filterList = await _filterIncomeService.OrderByDateUp(filterList);
+                filterList = await _filterService.OrderByDateUp(filterList);
             }
             else if (transactionFilterDTO.OrderBy == 2)
             {
-                filterList = await _filterIncomeService.OrderByDateDown(filterList);
+                filterList = await _filterService.OrderByDateDown(filterList);
             }
             else if (transactionFilterDTO.OrderBy == 3)
             {
-                filterList = await _filterIncomeService.OrderByAmountUp(filterList);
+                filterList = await _filterService.OrderByAmountUp(filterList);
             }
             else
             {
-                filterList = await _filterIncomeService.OrderByAmountDown(filterList);
+                filterList = await _filterService.OrderByAmountDown(filterList);
             }
 
-            var res = await _filterIncomeService.EndFilter(filterList);
+            var res = await _filterService.EndFilter(filterList);
             return new(res);
         }
 
@@ -57,7 +57,7 @@ namespace MoneyTracker.Application.Services
             Transaction transaction  = new Transaction()
             {
                 Amount = transactionDTO.Amount,
-                Category = transactionDTO.Category,
+                CategoryId = transactionDTO.Category.Id,
                 Comment = transactionDTO.Comment,
                 Date = transactionDTO.Date.ToUniversalTime().AddDays(1),
                 UserId = transactionDTO.UserId
@@ -67,8 +67,12 @@ namespace MoneyTracker.Application.Services
             {
                 return new("ошибка при создании");
             }
-            //Income
-            var updatedBalanceUser = await _userService.UpdateBalanceAsync(transaction.UserId, 0, transaction.Amount);
+            //--------------------------------------------
+            decimal amountMinus = transactionDTO.Category.Name == "Income" ? 0 : transaction.Amount; 
+            decimal amountPlus = transactionDTO.Category.Name == "Income" ? transaction.Amount : 0 ; 
+
+            var updatedBalanceUser = await _userService.UpdateBalanceAsync(transaction.UserId, amountMinus, amountPlus);
+
             if (updatedBalanceUser == null)
             {
                 return new(updatedBalanceUser.Error);
@@ -76,20 +80,24 @@ namespace MoneyTracker.Application.Services
             return new(responseTransaction);
         }
 
-        public async Task<bool> Delete(int incomeId)
+        public async Task<bool> Delete(int transactionId)
         {
-            Transaction? DeletedIncome = await _transactionRepository.GetById(incomeId);
-            if (DeletedIncome == null)
+            Transaction? DeletedTransaction = await _transactionRepository.GetById(transactionId);
+            if (DeletedTransaction == null)
             {
                 return false;
             }
-            decimal deletedAmount = DeletedIncome.Amount;
+            decimal deletedAmount = DeletedTransaction.Amount;
 
-            var responseDelete = await _transactionRepository.DeleteAsync(incomeId);
+            var responseDelete = await _transactionRepository.DeleteAsync(transactionId);
             if (responseDelete)
             {
-                //
-                var updatedBalanceUser = await _userService.UpdateBalanceAsync(DeletedIncome.UserId, deletedAmount, 0);
+                //--------------------------------
+
+                decimal amountMinus = DeletedTransaction.Category.Name == "Income" ? deletedAmount : 0;
+                decimal amountPlus = DeletedTransaction.Category.Name == "Income" ? 0 : deletedAmount;
+
+                var updatedBalanceUser = await _userService.UpdateBalanceAsync(DeletedTransaction.UserId, amountMinus, amountPlus);
                 if (updatedBalanceUser == null)
                 {
                     return false;
@@ -98,32 +106,33 @@ namespace MoneyTracker.Application.Services
             return responseDelete;
         }
 
-        public async Task<ResponseModel<Transaction>> GetById(int incomeId)
+        public async Task<ResponseModel<Transaction>> GetById(int transactionId)
         {
-            var responseIncome = await _transactionRepository.GetById(incomeId);
-            if (responseIncome == null)
+            var responseTransaction= await _transactionRepository.GetById(transactionId);
+            if (responseTransaction== null)
             {
-                return new("Приход с таким Id не существует");
+                return new("транзакция с таким Id не существует");
             }
-            return new(responseIncome);
+            return new(responseTransaction);
         }
 
-        public async Task<ResponseModel<Transaction>> Update(Transaction income)
+        public async Task<ResponseModel<Transaction>> Update(Transaction transaction)
         {
-            var incomeById = await GetById(income.Id);
-            if (incomeById == null)
+            var transactionById = await GetById(transaction.Id);
+            if (transactionById == null)
             {
-                return new(incomeById.Error);
+                return new(transactionById.Error);
             }
 
-            var responseIncome = await _transactionRepository.UpdateAsync(income);
+            var responseTransaction = await _transactionRepository.UpdateAsync(transaction);
             //
-            var updatedBalanceUser = await _userService.UpdateBalanceAsync(income.UserId, incomeById.Result.Amount, income.Amount);
+            //var updatedBalanceUser = await _userService.UpdateBalanceAsync(expense.UserId, expense.Amount, expenseById.Result.Amount);
+            var updatedBalanceUser = await _userService.UpdateBalanceAsync(transaction.UserId, transactionById.Result.Amount, transaction.Amount);
             if (updatedBalanceUser == null)
             {
                 return new(updatedBalanceUser.Error);
             }
-            return new(responseIncome);
+            return new(responseTransaction);
         }
     }
 }

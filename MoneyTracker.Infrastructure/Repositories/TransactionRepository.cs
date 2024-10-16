@@ -45,7 +45,7 @@ namespace MoneyTracker.Infrastructure.Repositories
 
         public async Task<Transaction?> GetById(int id)
         {
-            Transaction? transaction = await _db.Transactions.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            Transaction? transaction = await _db.Transactions.Include(x=>x.Category).AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
             return transaction;
         }
 

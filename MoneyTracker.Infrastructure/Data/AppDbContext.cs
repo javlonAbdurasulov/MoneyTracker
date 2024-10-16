@@ -18,7 +18,15 @@ namespace MoneyTracker.Infrastructure.Data
         {
 
         }
-        
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Transaction>()
+                .HasOne(t => t.Category) 
+                .WithMany() 
+                .HasForeignKey(t => t.CategoryId) 
+                .OnDelete(DeleteBehavior.Restrict); 
+            base.OnModelCreating(modelBuilder);
+        }
         public DbSet<User> Users {  get; set; }
         public DbSet<Transaction> Transactions{  get; set; }
         public DbSet<Expense> Expense {  get; set; }

@@ -11,17 +11,8 @@ using System.Threading.Tasks;
 
 namespace MoneyTracker.Infrastructure.Filter
 {
-    public class FilterService : IFilterService<Transaction> 
+    public class FilterService : IFilterService 
     {
-        private readonly IIncomeRepository _incomeRepository;
-        private readonly IExpenseRepository _expenseRepository;
-
-        public FilterService(IIncomeRepository incomeRepository, IExpenseRepository expenseRepository)
-        {
-            _incomeRepository = incomeRepository;
-            _expenseRepository = expenseRepository;
-        }
-
         public async Task<IQueryable<Transaction>> FilterByUser(IQueryable<Transaction> queryable, int userId)
         {
             return queryable.Where(x => x.UserId == userId);
