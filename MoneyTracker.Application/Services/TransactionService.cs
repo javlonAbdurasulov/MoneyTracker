@@ -119,15 +119,27 @@ namespace MoneyTracker.Application.Services
         public async Task<ResponseModel<Transaction>> Update(Transaction transaction)
         {
             var transactionById = await GetById(transaction.Id);
-            if (transactionById == null)
+            if (transactionById.Result == null)
             {
                 return new(transactionById.Error);
             }
 
             var responseTransaction = await _transactionRepository.UpdateAsync(transaction);
-            //
-            //var updatedBalanceUser = await _userService.UpdateBalanceAsync(expense.UserId, expense.Amount, expenseById.Result.Amount);
-            var updatedBalanceUser = await _userService.UpdateBalanceAsync(transaction.UserId, transactionById.Result.Amount, transaction.Amount);
+
+            //------------------------------------------------
+            decimal amountMinus = transactionById.Result.Category.Name == "Income" ? transactionById.Result.Amount : 0;
+            decimal amountPlus = transactionById.Result.Category.Name == "Income" ? 0 : transactionById.Result.Amount;
+
+            var updatedBalanceUser = await _userService.UpdateBalanceAsync(transaction.UserId, amountMinus, amountPlus);
+            if (updatedBalanceUser == null)
+            {
+                return new(updatedBalanceUser.Error);
+            }
+
+            amountMinus = transaction.Category.Name == "Income" ? 0 : transaction.Amount ;
+            amountPlus = transaction.Category.Name == "Income" ?  transaction.Amount : 0;
+
+            updatedBalanceUser = await _userService.UpdateBalanceAsync(transaction.UserId, amountMinus, amountPlus);
             if (updatedBalanceUser == null)
             {
                 return new(updatedBalanceUser.Error);
