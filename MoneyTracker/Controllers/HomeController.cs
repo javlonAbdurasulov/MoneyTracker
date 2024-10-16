@@ -177,7 +177,7 @@ namespace MoneyTracker.Controllers
                     DateStart = DateTime.MinValue.ToUniversalTime(),
                     AmountStart = decimal.MinValue,
                     AmountEnd = decimal.MaxValue,
-                    Category = "All",
+                    Category = new() { Name="All"},
                     OrderBy = 2,
                     UserId =responseUser.Result.Id
                 };
@@ -206,11 +206,11 @@ namespace MoneyTracker.Controllers
             ResponseModel<List<Income>> IncomeList = new ResponseModel<List<Income>>("");
             ResponseModel<List<Expense>> ExpenseList = new ResponseModel<List<Expense>>("");
 
-            if (indexModel.MoneyFilter.Category == "All")
+            if (indexModel.MoneyFilter.Category.Name == "All")
             {
                 BaseTransactionList = await _transactionService.ApplyFilterBaseTransactions(indexModel.MoneyFilter);
             }
-            else if(indexModel.MoneyFilter.Category == "Income")
+            else if(indexModel.MoneyFilter.Category.Name == "Income")
             {
                 IncomeList = await _incomeService.ApplyFilter(indexModel.MoneyFilter);
             }

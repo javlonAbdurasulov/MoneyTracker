@@ -7,8 +7,6 @@ namespace MoneyTracker.Models
     {
         public User User{ get; set; }
         public MoneyFilterDTO Filter { get; set; }
-        public List<Income> Incomes{ get; set; }
-        public List<Expense> Expenses{ get; set; }
-        public List<TransactionListDTO> BaseTransactions{ get; set; }
+        public List<Transaction> Transactions{ get; set; }
     }
 }
