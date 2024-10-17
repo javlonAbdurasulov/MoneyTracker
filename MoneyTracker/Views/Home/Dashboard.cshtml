@@ -57,28 +57,29 @@
                     <option value="9" class="expense hidden">Другие расходы</option>
                 </select>
             </div>
+            <br />
             <div class="filter-group">
                 <label for="orderby-amount">Order by </label>
                 <select id="orderby-amount" name="MoneyFilter.OrderBy">
-                    @if (Model.Result.MoneyFilter.OrderBy == 2)
+                    @if (Model.Result.Filter.OrderBy == 2)
                     {
                         <option value="2" selected>По убыванию Даты</option>
                     }
                     else{<option value="2" >По убыванию Даты</option>}
 
-                    @if (Model.Result.MoneyFilter.OrderBy == 2)
+                    @if (Model.Result.Filter.OrderBy == 2)
                     {
                         <option value="1" selected>По возрастанию Даты</option>
                     }
                     else{<option value="1" >По возрастанию Даты</option>}
 
-                    @if (Model.Result.MoneyFilter.OrderBy == 2)
+                    @if (Model.Result.Filter.OrderBy == 2)
                     {
                         <option value="3" selected>По возрастанию Суммы</option>
                     }
                     else{<option value="3" >По возрастанию Суммы</option>}
 
-                    @if (Model.Result.MoneyFilter.OrderBy == 2)
+                    @if (Model.Result.Filter.OrderBy == 2)
                     {
                         <option value="4" selected>По убыванию Суммы</option>
                     }
