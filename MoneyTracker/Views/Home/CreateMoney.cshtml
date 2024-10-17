@@ -14,15 +14,15 @@
 
         <div class="input-group">
             <label for="category">Category</label>
-            <select id="category" name="Category" required>
-                <option value="Income">Income</option>
-                <option value="Expense">Expense</option>
+            <select id="category" name="IsIncome" required>
+                <option value="true">Income</option>
+                <option value="false">Expense</option>
             </select>
         </div>
         //---------------
         <div class="filter-group">
             <label for="subcategory">Subcategory</label>
-            <select id="subcategory" name="MoneyFilter.Subcategory">
+            <select id="subcategory" name="CategoryId">
                 <!-- Options will be dynamically populated based on the selected category -->
             </select>
         </div>

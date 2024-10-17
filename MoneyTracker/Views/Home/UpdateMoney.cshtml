@@ -13,18 +13,24 @@
     
     <div class="input-group">
         <label for="transaction-category">Category</label>
-        @if(@Model.Category == "Income"){
-            <select id="transaction-category" name="Category" disabled required>
-                <option value="Income" selected>Income</option>
-                <option value="Expense">Expense</option>
+        @if(@Model.Category.IsIncome == true){
+            <select id="transaction-category" name="Category.IsIncome">
+                <option value="true">Income</option>
+                <option value="false">Expense</option>
             </select>
         }
         else{
-            <select id="transaction-category" name="Category" disabled required>
-                <option value="Expense" selected>Expense</option>
-                <option value="Income" >Income</option>
+            <select id="transaction-category" name="Category.IsIncome">
+                <option value="false">Expense</option>
+                <option value="true" >Income</option>
             </select>
         }
+        <div class="filter-group">
+            <label for="subcategory">Subcategory</label>
+            <select id="subcategory" name="Category.Id">
+                <!-- Options will be dynamically populated based on the selected category -->
+            </select>
+        </div>
     </div>
 
     <div class="input-group">

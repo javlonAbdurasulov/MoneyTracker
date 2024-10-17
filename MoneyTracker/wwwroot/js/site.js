@@ -1,22 +1,17 @@
 ﻿$(document).ready(function () {
-    // Define the options for each category
-    var incomeOptions = '<option value="Salary">Salary</option><option value="Bonus">Bonus</option><option value="Investment">Investment</option>';
-    var expenseOptions = '<option value="Rent">Rent</option><option value="Utilities">Utilities</option><option value="Groceries">Groceries</option>';
+    var incomeOptions = '<option value="1">Salary</option><option value="2">Bonus</option><option value="3">Investment</option>';
+    var expenseOptions = '<option value="4">Rent</option><option value="5">Utilities</option><option value="6">Groceries</option>';
 
-    // When the category changes
     $('#category').change(function () {
         var selectedCategory = $(this).val();
 
-        // Clear the subcategory options
         $('#subcategory').empty();
 
-        // Populate the subcategory options based on the selected category
-        if (selectedCategory === 'Income') {
+        if (selectedCategory === true) {
             $('#subcategory').append(incomeOptions);
-        } else if (selectedCategory === 'Expense') {
+        } else if (selectedCategory === false) {
             $('#subcategory').append(expenseOptions);
         }
-        // If "All" is selected, leave the subcategory empty
     });
 });
 

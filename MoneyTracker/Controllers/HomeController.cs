@@ -13,15 +13,11 @@ namespace MoneyTracker.Controllers
     public class HomeController : Controller
     {
         private readonly IUserService _userService;
-        private readonly IIncomeService _incomeService;
-        private readonly IExpenseService _expenseService;
-        private readonly IBaseTransactionService _transactionService;
+        private readonly ITransactionService _transactionService;
 
-        public HomeController(IUserService userService, IIncomeService incomeService, IExpenseService expenseService,IBaseTransactionService transactionService)
+        public HomeController(IUserService userService, ITransactionService transactionService)
         {
             _userService = userService;
-            _incomeService = incomeService;
-            _expenseService = expenseService;
             _transactionService = transactionService;
         }
 
@@ -31,84 +27,39 @@ namespace MoneyTracker.Controllers
         }
         public async Task<IActionResult> UpdateMoneyAsync(UpdateTransactionDTO updateTransaction)
         {
-            if (updateTransaction.Category == "Income")
+            var income = await _transactionService.GetById(updateTransaction.Id);
+            UpdateView updateView = new UpdateView()
             {
-                var income = await _incomeService.GetById(updateTransaction.Id);
-                UpdateView updateView = new UpdateView()
-                {
-                    Amount = income.Result.Amount,
-                    Category = income.Result.Category,
-                    Comment = income.Result.Comment,
-                    Date = income.Result.Date.ToUniversalTime(),
-                    Id = income.Result.Id,
-                    UserId = income.Result.UserId,
-                    UserName = updateTransaction.UserName
-                };
-                return View(updateView);
-            }
-            else
-            {
-                var expense = await _expenseService.GetById(updateTransaction.Id);
-
-                UpdateView updateView = new UpdateView()
-                {
-                    Amount = expense.Result.Amount,
-                    Category = expense.Result.Category,
-                    Comment = expense.Result.Comment,
-                    Date = expense.Result.Date.ToUniversalTime(),
-                    Id = expense.Result.Id,
-                    UserId = expense.Result.UserId,
-                    UserName = updateTransaction.UserName
-                };
-                return View(updateView);
-            }
-
+                Amount = income.Result.Amount,
+                Category = income.Result.Category,
+                Comment = income.Result.Comment,
+                Date = income.Result.Date.ToUniversalTime().AddDays(1),
+                Id = income.Result.Id,
+                UserId = income.Result.UserId,
+                UserName = updateTransaction.UserName
+            };
+            return View(updateView);
         }
         public async Task<IActionResult> UpdateTransactions(UpdateView updateView)
         {
 
-            if (updateView.Category == "Income")
+            Transaction transaction = new()
             {
-                Income income = new()
-                {
-                    Amount = updateView.Amount,
-                    Category = updateView.Category,
-                    Comment = updateView.Comment,
-                    Date = updateView.Date.ToUniversalTime(),
-                    Id = updateView.Id,
-                    UserId = updateView.UserId
-                };
-                var res =await _incomeService.Update(income);
+                Amount = updateView.Amount,
+                CategoryId = updateView.Category.Id,
+                Comment = updateView.Comment,
+                Date = updateView.Date.ToUniversalTime(),
+                Id = updateView.Id,
+                UserId = updateView.UserId
+            };
+            var res =await _transactionService.Update(transaction);
 
-                IndexModel indexModel = new()
-                {
-                    DefaultFilter = true,
-                    UserName = updateView.UserName
-                };
-                return RedirectToAction("Dashboard",indexModel);
-            }
-            else
+            IndexModel indexModel = new()
             {
-                Expense expense= new()
-                {
-                    Amount = updateView.Amount,
-                    Category = updateView.Category,
-                    Comment = updateView.Comment,
-                    Date = updateView.Date.ToUniversalTime(),
-                    Id = updateView.Id,
-                    UserId = updateView.UserId
-                };
-                var res = await _expenseService.Update(expense);
-
-                IndexModel indexModel = new()
-                {
-                    DefaultFilter = true,
-                    UserName = updateView.UserName
-                };
-                return RedirectToAction("Dashboard", indexModel);
-
-            }
-
+                DefaultFilter = true,
+                UserName = updateView.UserName
+            };
+            return RedirectToAction("Dashboard",indexModel);
         }
         public async Task<IActionResult> DeleteTransactions(UpdateTransactionDTO DeleteTransaction)
         {
@@ -138,22 +89,14 @@ namespace MoneyTracker.Controllers
             MoneyDTO money = new MoneyDTO()
             {
                 Amount = Createview.Amount,
-                Category = Createview.Category,
+                Category = new() { Id= Createview.CategoryId },
                 Comment = Createview.Comment,
                 Date = Createview.Date,
                 UserId = Createview.UserId
             };
 
-            if (Createview.Category == "Income")
-            {
-                var res = await _incomeService.Create(money);
-            }
-            else
-            {
-                var res = await _expenseService.Create(money);
-
-            }
-
+            var res = await _transactionService.Create(money);
+            
             IndexModel indexModel = new()
             {
                 DefaultFilter = true,
