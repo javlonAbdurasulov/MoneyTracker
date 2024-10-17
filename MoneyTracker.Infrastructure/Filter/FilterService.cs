@@ -23,7 +23,11 @@ namespace MoneyTracker.Infrastructure.Filter
         }
         public async Task<IQueryable<Transaction>> FilterByCategory(IQueryable<Transaction> queryable, Category category)
         {
-            return queryable.Where(t => t.Category.Name == category.Name);
+            if(category.Name!=null)
+            {
+                queryable = queryable.Where(t => t.Category.Name == category.Name);
+            }
+            return queryable.Where(t => t.Category.IsIncome == category.IsIncome);
         }
 
         public async Task<IQueryable<Transaction>> OrderByDateUp(IQueryable<Transaction> queryable)

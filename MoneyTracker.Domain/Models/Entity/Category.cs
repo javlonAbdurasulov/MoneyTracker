@@ -10,6 +10,7 @@ namespace MoneyTracker.Domain.Models.Entity
     {
         public int Id{ get; set; }
         public string Name{ get; set; }
+        public bool IsIncome{ get; set; }
         public List<Transaction> Transactions{ get; set; }
     }
 }
