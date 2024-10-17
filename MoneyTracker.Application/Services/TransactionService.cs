@@ -70,8 +70,8 @@ namespace MoneyTracker.Application.Services
                 return new("ошибка при создании");
             }
             //--------------------------------------------
-            decimal amountMinus = transactionDTO.Category.Name == "Income" ? 0 : transaction.Amount; 
-            decimal amountPlus = transactionDTO.Category.Name == "Income" ? transaction.Amount : 0 ; 
+            decimal amountMinus = transactionDTO.Category.IsIncome == true ? 0 : transaction.Amount;
+            decimal amountPlus = transactionDTO.Category.IsIncome == true ? transaction.Amount : 0;
 
             var updatedBalanceUser = await _userService.UpdateBalanceAsync(transaction.UserId, amountMinus, amountPlus);
 
@@ -96,8 +96,8 @@ namespace MoneyTracker.Application.Services
             {
                 //--------------------------------
 
-                decimal amountMinus = DeletedTransaction.Category.Name == "Income" ? deletedAmount : 0;
-                decimal amountPlus = DeletedTransaction.Category.Name == "Income" ? 0 : deletedAmount;
+                decimal amountMinus = DeletedTransaction.Category.IsIncome == true ? deletedAmount : 0;
+                decimal amountPlus = DeletedTransaction.Category.IsIncome == true ? 0 : deletedAmount;
 
                 var updatedBalanceUser = await _userService.UpdateBalanceAsync(DeletedTransaction.UserId, amountMinus, amountPlus);
                 if (updatedBalanceUser == null)
@@ -129,8 +129,8 @@ namespace MoneyTracker.Application.Services
             var responseTransaction = await _transactionRepository.UpdateAsync(transaction);
 
             //------------------------------------------------
-            decimal amountMinus = transactionById.Result.Category.Name == "Income" ? transactionById.Result.Amount : 0;
-            decimal amountPlus = transactionById.Result.Category.Name == "Income" ? 0 : transactionById.Result.Amount;
+            decimal amountMinus = transactionById.Result.Category.IsIncome == true ? transactionById.Result.Amount : 0;
+            decimal amountPlus = transactionById.Result.Category.IsIncome == true ? 0 : transactionById.Result.Amount;
 
             var updatedBalanceUser = await _userService.UpdateBalanceAsync(transaction.UserId, amountMinus, amountPlus);
             if (updatedBalanceUser == null)
@@ -138,8 +138,8 @@ namespace MoneyTracker.Application.Services
                 return new(updatedBalanceUser.Error);
             }
 
-            amountMinus = transaction.Category.Name == "Income" ? 0 : transaction.Amount ;
-            amountPlus = transaction.Category.Name == "Income" ?  transaction.Amount : 0;
+            amountMinus = transaction.Category.IsIncome == true ? 0 : transaction.Amount ;
+            amountPlus = transaction.Category.IsIncome == true ?  transaction.Amount : 0;
 
             updatedBalanceUser = await _userService.UpdateBalanceAsync(transaction.UserId, amountMinus, amountPlus);
             if (updatedBalanceUser == null)
