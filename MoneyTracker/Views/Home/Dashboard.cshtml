@@ -32,28 +32,58 @@
                 <input type="number" id="price-end" value="@Model.Result.Filter.AmountEnd" name="MoneyFilter.AmountEnd" placeholder="Enter price" min="0">
             </div>
             <div class="filter-group">
-                <label for="category">Category</label>
-                <label for="my-checkbox">All Categorys</label>
-                <input type="checkbox" id="my-checkbox" />
-                <input type="hidden" id="checkbox-value" name="MoneyFilter.Category.Name" value="null" />
+                <button id="toggleButton">Show All Categories</button>
+            </div>
 
-                <select id="categoryType" value="@Model.Result.Filter.Category" name="MoneyFilter.Category.IsIncome">
-                    //---------
+            <div class="filter-group">
+                <label for="categoryType">Category</label>
+                <select id="categoryType" name="MoneyFilter.Category.IsIncome">
+                    <option value="true" class="">Income</option>
+                    <option value="false" class="">Expense</option>
                 </select>
             </div>
+
             <div class="filter-group">
                 <label for="subcategory">Subcategory</label>
                 <select id="subcategory" name="MoneyFilter.Category.Name">
-                    <!-- Options will be dynamically populated based on the selected category -->
+                    <option value="1" class="income ">Заработная плата</option>
+                    <option value="2" class="income ">Аренда</option>
+                    <option value="3" class="income ">Иные приходы</option>
+                    <option value="4" class="expense hidden">Продукты питания</option>
+                    <option value="5" class="expense hidden">Транспорт</option>
+                    <option value="6" class="expense hidden">Мобильная Связь</option>
+                    <option value="7" class="expense hidden">Интернет</option>
+                    <option value="8" class="expense hidden">Развлечение</option>
+                    <option value="9" class="expense hidden">Другие расходы</option>
                 </select>
             </div>
             <div class="filter-group">
                 <label for="orderby-amount">Order by </label>
                 <select id="orderby-amount" name="MoneyFilter.OrderBy">
-                    <option value="2">По убыванию Даты</option>
-                    <option value="1">По возрастанию Даты</option>
-                    <option value="3">По возрастанию Суммы</option>
-                    <option value="4">По убыванию Суммы</option>
+                    @if (Model.Result.MoneyFilter.OrderBy == 2)
+                    {
+                        <option value="2" selected>По убыванию Даты</option>
+                    }
+                    else{<option value="2" >По убыванию Даты</option>}
+
+                    @if (Model.Result.MoneyFilter.OrderBy == 2)
+                    {
+                        <option value="1" selected>По возрастанию Даты</option>
+                    }
+                    else{<option value="1" >По возрастанию Даты</option>}
+
+                    @if (Model.Result.MoneyFilter.OrderBy == 2)
+                    {
+                        <option value="3" selected>По возрастанию Суммы</option>
+                    }
+                    else{<option value="3" >По возрастанию Суммы</option>}
+
+                    @if (Model.Result.MoneyFilter.OrderBy == 2)
+                    {
+                        <option value="4" selected>По убыванию Суммы</option>
+                    }
+                    else{<option value="4" >По убыванию Суммы</option>}
+
                 </select>
             </div>
             <input type="hidden" name="MoneyFilter.UserId" value="@Model.Result.User.Id">

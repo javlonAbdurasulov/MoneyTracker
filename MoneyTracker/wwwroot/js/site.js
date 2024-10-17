@@ -1,29 +1,54 @@
-﻿$(document).ready(function () {
-    var incomeOptions = '<option value="1">Заработная плата</option><option value="2">Аренда</option><option value="3">Иные приходы</option>';
-    var expenseOptions = '<option value="4">Продукты питания</option><option value="5">Транспорт</option><option value="6">Мобильная Связь</option><option value="7">Интернет</option><option value="8">Развлечение</option><option value="9">Другое</option>';
-    var typeOptions = '<option value="true">Income</option><option value="false">Expense</option>';
+﻿document.addEventListener('DOMContentLoaded', function () {
+    var button = document.getElementById('toggleButton');
+    var categoryType = document.getElementById('categoryType');
+    var subcategory = document.getElementById('subcategory');
+    var incomeOptions = document.querySelectorAll('.income');
+    var expenseOptions = document.querySelectorAll('.expense');
+    var allCategoriesVisible = false; // Переменная для отслеживания состояния
 
-    const categoryType = document.getElementById('categoryType');
-    const checkbox = document.getElementById('my-checkbox');
-    const hiddenInput = document.getElementById('checkbox-value');
-    checkbox.addEventListener('change', function () {
-        if (this.checked) hiddenInput.value = 'All';
-        else {
-            categoryType.innerHTML = '';
-            categoryType.innerHTML = typeOptions;
+    // Функция для показа/скрытия select'ов
+    function toggleVisibility() {
+        allCategoriesVisible = !allCategoriesVisible; // Меняем состояние
+
+        if (allCategoriesVisible) {
+            categoryType.classList.add('hidden');
+            subcategory.classList.add('hidden');
+            button.textContent = 'Hide All Categories'; // Изменение текста кнопки
+        } else {
+            categoryType.classList.remove('hidden');
+            subcategory.classList.remove('hidden');
+            button.textContent = 'Show All Categories'; // Изменение текста кнопки
         }
-    });
+    }
 
-    $('#category').change(function () {
-        var selectedCategory = $(this).val();
+    function filterSubcategories() {
+        var selectedCategory = categoryType.value;
 
-        $('#subcategory').empty();
+        
+        incomeOptions.forEach(function (option) {
+            option.classList.add('hidden');
+        });
+        expenseOptions.forEach(function (option) {
+            option.classList.add('hidden');
+        });
 
-        if (selectedCategory === true) {
-            $('#subcategory').append(incomeOptions);
-        } else if (selectedCategory === false) {
-            $('#subcategory').append(expenseOptions);
+        if (selectedCategory === 'true') {
+            incomeOptions.forEach(function (option) {
+                option.classList.remove('hidden');
+            });
+        } else if (selectedCategory === 'false') {
+            expenseOptions.forEach(function (option) {
+                option.classList.remove('hidden');
+            });
         }
-    });
+    }
+
+    // Событие для кнопки
+    button.addEventListener('click', toggleVisibility);
+
+    // Событие для выбора категории
+    categoryType.addEventListener('change', filterSubcategories);
+
+    // Начальная проверка видимости при загрузке страницы
+    toggleVisibility(); // Скрыть селекты по умолчанию
 });
-

@@ -104,63 +104,62 @@ namespace MoneyTracker.Controllers
             };
             return RedirectToAction("Dashboard",indexModel);
         }
-        //public async Task<IActionResult> Dashboard(IndexModel indexModel)
-        //{
-        //    var responseUser = await _userService.LoginAsync(indexModel.UserName);
-        //    if(responseUser.Result==null) { 
-        //        return View(new ResponseModel<DashboardModel>(responseUser.Error));
-        //    }
-             
+        public async Task<IActionResult> Dashboard(IndexModel indexModel)
+        {
+            var responseUser = await _userService.LoginAsync(indexModel.UserName);
+            if (responseUser.Result == null)
+            {
+                return View(new ResponseModel<DashboardModel>(responseUser.Error));
+            }
 
-        //    if (indexModel.DefaultFilter)
-        //    {
-        //        MoneyFilterDTO defaultFilterDTO = new MoneyFilterDTO()
-        //        {
-        //            DateEnd = DateTime.MaxValue.ToUniversalTime(),
-        //            DateStart = DateTime.MinValue.ToUniversalTime(),
-        //            AmountStart = decimal.MinValue,
-        //            AmountEnd = decimal.MaxValue,
-        //            Category = new() { Name="All"},
-        //            OrderBy = 2,
-        //            UserId =responseUser.Result.Id
-        //        };
 
-        //        indexModel.MoneyFilter = defaultFilterDTO;
-        //    }
-        //    else
-        //    {
-        //        //addDays()
-        //        indexModel.MoneyFilter.DateStart = indexModel.MoneyFilter.DateStart.ToUniversalTime();
+            if (indexModel.DefaultFilter)
+            {
+                MoneyFilterDTO defaultFilterDTO = new MoneyFilterDTO()
+                {
+                    DateEnd = DateTime.MaxValue.ToUniversalTime(),
+                    DateStart = DateTime.MinValue.ToUniversalTime(),
+                    AmountStart = decimal.MinValue,
+                    AmountEnd = decimal.MaxValue,
+                    Category = new() { Name = "All" },
+                    OrderBy = 2,
+                    UserId = responseUser.Result.Id
+                };
 
-        //        if (indexModel.MoneyFilter.DateEnd == DateTime.MinValue)
-        //        {
-        //            indexModel.MoneyFilter.DateEnd = DateTime.MaxValue.ToUniversalTime();
-        //        }
-        //        else
-        //        {
-        //            indexModel.MoneyFilter.DateEnd = indexModel.MoneyFilter.DateEnd.ToUniversalTime();
-        //        }
-        //        if (indexModel.MoneyFilter.AmountEnd == 0)
-        //        {
-        //            indexModel.MoneyFilter.AmountEnd = decimal.MaxValue;
-        //        }
+                indexModel.MoneyFilter = defaultFilterDTO;
+            }
+            else
+            {
+                //addDays()
+                indexModel.MoneyFilter.DateStart = indexModel.MoneyFilter.DateStart.ToUniversalTime();
 
-        //    }
-        //    ResponseModel<List<Transaction>> TransactionList = new ResponseModel<List<Transaction>>("");
+                if (indexModel.MoneyFilter.DateEnd == DateTime.MinValue)
+                {
+                    indexModel.MoneyFilter.DateEnd = DateTime.MaxValue.ToUniversalTime();
+                }
+                else
+                {
+                    indexModel.MoneyFilter.DateEnd = indexModel.MoneyFilter.DateEnd.ToUniversalTime();
+                }
+                if (indexModel.MoneyFilter.AmountEnd == 0)
+                {
+                    indexModel.MoneyFilter.AmountEnd = decimal.MaxValue;
+                }
 
-        //    TransactionList = await _transactionService.ApplyFilter(indexModel.MoneyFilter);
-            
-        //    DashboardModel responseDashModel = new DashboardModel()
-        //    {
-        //        User = responseUser.Result,
-        //        Incomes = IncomeList.Result==null ? new() : IncomeList.Result,
-        //        Expenses = ExpenseList.Result == null ? new() : ExpenseList.Result,
-        //        BaseTransactions = BaseTransactionList == null ? new() : BaseTransactionList.Result,
-        //        Filter = indexModel.MoneyFilter
-        //    };
+            }
+            ResponseModel<List<Transaction>> TransactionList = new ResponseModel<List<Transaction>>("");
 
-        //    return View(new ResponseModel<DashboardModel>(responseDashModel));
-        //}
+            TransactionList = await _transactionService.ApplyFilter(indexModel.MoneyFilter);
+
+            DashboardModel responseDashModel = new DashboardModel()
+            {
+                User = responseUser.Result,
+                Transactions = TransactionList.Result == null ? new() : TransactionList.Result,
+                Filter = indexModel.MoneyFilter
+            };
+
+            return View(new ResponseModel<DashboardModel>(responseDashModel));
+        }
 
         public IActionResult Privacy()
         {

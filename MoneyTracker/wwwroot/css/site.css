@@ -12,7 +12,9 @@ body {
     align-items: center;
     height: 100vh;
 }
-
+.hidden{
+    display:none;
+}
 .login-container {
     background-color: white;
     padding: 20px;
@@ -60,7 +62,8 @@ button {
         background-color: #45a049;
     }
 .container {
-    max-width: 1200px;
+    /*max-width: 1200px;*/
+    /*width: 1200px;*/
     margin: 0 auto;
     background-color: white;
     padding: 20px;
