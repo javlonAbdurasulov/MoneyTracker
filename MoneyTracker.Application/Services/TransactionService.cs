@@ -28,7 +28,9 @@ namespace MoneyTracker.Application.Services
         {
             var query = _transactionRepository.GetQueryable();
             var filterList = await _filterService.FilterByUser(query, transactionFilterDTO.UserId);
-            filterList = await _filterService.FilterByCategory(filterList, transactionFilterDTO.Category);
+
+            if(transactionFilterDTO.Category.Name!="All") filterList = await _filterService.FilterByCategory(filterList, transactionFilterDTO.Category);
+            
             filterList = await _filterService.FilterByDate(filterList, transactionFilterDTO.DateStart, transactionFilterDTO.DateEnd);
             filterList = await _filterService.FilterByAmount(filterList, transactionFilterDTO.AmountStart, transactionFilterDTO.AmountEnd);
             if (transactionFilterDTO.OrderBy == 1)
