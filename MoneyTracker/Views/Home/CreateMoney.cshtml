@@ -12,18 +12,25 @@
             <input type="date" id="date" name="Date" required>
         </div>
 
-        <div class="input-group">
-            <label for="category">Category</label>
-            <select id="category" name="IsIncome" required>
+        @* <div class="input-group">
+            <label for="categoryType">Category</label>
+            <select id="categoryType" name="IsIncome" required>
                 <option value="true">Income</option>
                 <option value="false">Expense</option>
             </select>
-        </div>
-        //---------------
+        </div> *@
         <div class="filter-group">
             <label for="subcategory">Subcategory</label>
             <select id="subcategory" name="CategoryId">
-                <!-- Options will be dynamically populated based on the selected category -->
+                <option value="1" class="income ">Заработная плата</option>
+                <option value="2" class="income ">Аренда</option>
+                <option value="3" class="income ">Иные приходы</option>
+                <option value="4" class="expense ">Продукты питания</option>
+                <option value="5" class="expense ">Транспорт</option>
+                <option value="6" class="expense ">Мобильная Связь</option>
+                <option value="7" class="expense ">Интернет</option>
+                <option value="8" class="expense ">Развлечение</option>
+                <option value="9" class="expense ">Другие расходы</option>
             </select>
         </div>
 

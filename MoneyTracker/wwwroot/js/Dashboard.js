@@ -4,8 +4,8 @@
     var subcategory = document.getElementById('subcategory');
     var incomeOptions = document.querySelectorAll('.income');
     var expenseOptions = document.querySelectorAll('.expense');
-    var allCategoriesVisible = localStorage.getItem('allCategoriesVisible') === 'true'; // Сохранение состояния из localStorage
-
+    var allCategoriesVisible = false; // Переменная для отслеживания состояния
+    var inputField = document.getElementById('inputCategory');
     // Функция для показа/скрытия select'ов
     function toggleVisibility() {
         allCategoriesVisible = !allCategoriesVisible; // Меняем состояние
@@ -14,15 +14,14 @@
         if (allCategoriesVisible) {
             categoryType.classList.add('hidden');
             subcategory.classList.add('hidden');
-            button.textContent = 'Show All Categories'; // Изменение текста кнопки
+            button.textContent = 'Hide All Categories'; // Изменение текста кнопки
+            inputField.value = 'All';
         } else {
             categoryType.classList.remove('hidden');
             subcategory.classList.remove('hidden');
-            button.textContent = 'Hide All Categories'; // Изменение текста кнопки
+            button.textContent = 'Show All Categories'; // Изменение текста кнопки
+            inputField.value = '';
         }
-
-        // Сохраняем состояние в localStorage
-        localStorage.setItem('allCategoriesVisible', allCategoriesVisible);
     }
 
     // Функция для фильтрации подкатегорий в зависимости от выбора категории
@@ -57,21 +56,5 @@
 
     // Начальная проверка видимости при загрузке страницы
     console.log("Initial visibility state: ", allCategoriesVisible);
-    toggleVisibility(); // Устанавливаем начальную видимость
-});
-document.getElementById('yourFormId').addEventListener('submit', function (event) {
-    event.preventDefault(); // Остановить стандартное поведение формы
-
-    var formData = new FormData(this); // Получаем данные формы
-
-    fetch(this.action, {
-        method: 'POST',
-        body: formData,
-    })
-        .then(response => response.text())
-        .then(data => {
-            // Обновите нужные элементы на странице, используя полученные данные
-            document.getElementById('resultContainer').innerHTML = data;
-        })
-        .catch(error => console.error('Ошибка:', error));
+    toggleVisibility(); // Скрыть селекты по умолчанию
 });
