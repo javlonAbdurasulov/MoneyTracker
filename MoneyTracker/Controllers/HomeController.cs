@@ -61,24 +61,18 @@ namespace MoneyTracker.Controllers
             };
             return RedirectToAction("Dashboard",indexModel);
         }
-        //public async Task<IActionResult> DeleteTransactions(UpdateTransactionDTO DeleteTransaction)
-        //{
-        //    if (DeleteTransaction.Category == "Income")
-        //    {
-        //        await _incomeService.Delete(DeleteTransaction.Id);
-        //    }
-        //    else
-        //    {
-        //        await _expenseService.Delete(DeleteTransaction.Id);
+        public async Task<IActionResult> DeleteTransactions(UpdateTransactionDTO DeleteTransaction)
+        {
 
-        //    }
-        //    IndexModel indexModel = new()
-        //    {
-        //        DefaultFilter = true,
-        //        UserName = DeleteTransaction.UserName
-        //    };
-        //    return RedirectToAction("Dashboard",indexModel);
-        //}
+            await _transactionService.Delete(DeleteTransaction.Id);
+            
+            IndexModel indexModel = new()
+            {
+                DefaultFilter = true,
+                UserName = DeleteTransaction.UserName
+            };
+            return RedirectToAction("Dashboard", indexModel);
+        }
         public IActionResult CreateMoney(PreCreateview preCreateview)
         {
 
