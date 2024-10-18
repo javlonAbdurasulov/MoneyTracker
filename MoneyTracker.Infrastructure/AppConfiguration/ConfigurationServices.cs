@@ -26,6 +26,7 @@ namespace MoneyTracker.Infrastructure.AppConfiguration
             //repository
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ITransactionRepository,TransactionRepository>();
+            services.AddScoped<ICategoryRepository,CategoryRepository>();
 
 
 

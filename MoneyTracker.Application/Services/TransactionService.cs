@@ -16,12 +16,14 @@ namespace MoneyTracker.Application.Services
         private readonly ITransactionRepository _transactionRepository;
         private readonly IUserService _userService;
         private readonly IFilterService _filterService;
+        private readonly ICategoryRepository _categoryRepository;
 
-        public TransactionService(ITransactionRepository transactionRepository, IUserService userService, IFilterService filterIncomeService)
+        public TransactionService(ITransactionRepository transactionRepository, IUserService userService, IFilterService filterIncomeService, ICategoryRepository categoryRepository)
         {
             _transactionRepository = transactionRepository;
             _userService = userService;
             _filterService = filterIncomeService;
+            _categoryRepository = categoryRepository;
         }
 
         public async Task<ResponseModel<List<Transaction>>> ApplyFilter(MoneyFilterDTO transactionFilterDTO)
@@ -70,8 +72,9 @@ namespace MoneyTracker.Application.Services
                 return new("ошибка при создании");
             }
             //--------------------------------------------
-            decimal amountMinus = transactionDTO.Category.IsIncome == true ? 0 : transaction.Amount;
-            decimal amountPlus = transactionDTO.Category.IsIncome == true ? transaction.Amount : 0;
+            var categoryById = await _categoryRepository.GetById(transactionDTO.Category.Id);
+            decimal amountMinus = categoryById.IsIncome == true ? 0 : transaction.Amount;
+            decimal amountPlus = categoryById.IsIncome == true ? transaction.Amount : 0;
 
             var updatedBalanceUser = await _userService.UpdateBalanceAsync(transaction.UserId, amountMinus, amountPlus);
 

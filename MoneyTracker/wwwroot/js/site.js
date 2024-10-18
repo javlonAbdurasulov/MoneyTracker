@@ -6,10 +6,43 @@
     var expenseOptions = document.querySelectorAll('.expense');
     var allCategoriesVisible = false; // Переменная для отслеживания состояния
     var inputField = document.getElementById('inputCategory');
+    //var filterGroup = document.getElementById('forCategory');
     // Функция для показа/скрытия select'ов
     function toggleVisibility() {
+
+        //var categoryType = document.getElementById('categoryType');
+        //// Если элемент существует, удаляем его
+        //if (categoryType) {
+        //    categoryType.remove();
+        //} else {
+        //    // Если элемента нет, создаем его
+        //    categoryType = document.createElement('select');
+        //    categoryType.id = 'categoryType';
+        //    categoryType.name = 'MoneyFilter.Category.IsIncome';
+
+        //    // Создаем опцию Income
+        //    var incomeOption = document.createElement('option');
+        //    incomeOption.value = 'true';
+        //    incomeOption.textContent = 'Income';
+
+        //    // Создаем опцию Expense
+        //    var expenseOption = document.createElement('option');
+        //    expenseOption.value = 'false';
+        //    expenseOption.textContent = 'Expense';
+
+        //    // Добавляем опции в select
+        //    categoryType.appendChild(incomeOption);
+        //    categoryType.appendChild(expenseOption);
+
+        //    // Находим элемент div с классом filter-group forCategory
+            
+
+        //    // Добавляем созданный select после label
+        //    filterGroup.appendChild(categoryType);
+        //}
+
+        //--------------------
         allCategoriesVisible = !allCategoriesVisible; // Меняем состояние
-        console.log("Visibility toggled: ", allCategoriesVisible);
 
         if (allCategoriesVisible) {
             categoryType.classList.add('hidden');
@@ -58,3 +91,5 @@
     console.log("Initial visibility state: ", allCategoriesVisible);
     toggleVisibility(); // Скрыть селекты по умолчанию
 });
+
+
