@@ -79,11 +79,11 @@ namespace MoneyTracker.Controllers
         //    };
         //    return RedirectToAction("Dashboard",indexModel);
         //}
-        //public IActionResult CreateMoney(PreCreateview preCreateview)
-        //{
+        public IActionResult CreateMoney(PreCreateview preCreateview)
+        {
 
-        //    return View(preCreateview);
-        //}
+            return View(preCreateview);
+        }
         public async Task<IActionResult> AddTransactions(CreateView Createview)
         {
             MoneyDTO money = new MoneyDTO()
@@ -119,7 +119,7 @@ namespace MoneyTracker.Controllers
                 {
                     DateEnd = DateTime.MaxValue.ToUniversalTime(),
                     DateStart = DateTime.MinValue.ToUniversalTime(),
-                    AmountStart = decimal.MinValue,
+                    AmountStart = 0,
                     AmountEnd = decimal.MaxValue,
                     Category = new() { Name = "All" },
                     OrderBy = 2,
@@ -131,7 +131,7 @@ namespace MoneyTracker.Controllers
             else
             {
                 //addDays()
-                indexModel.MoneyFilter.DateStart = indexModel.MoneyFilter.DateStart.ToUniversalTime();
+                indexModel.MoneyFilter.DateStart = indexModel.MoneyFilter.DateStart.ToUniversalTime().AddDays(1);
 
                 if (indexModel.MoneyFilter.DateEnd == DateTime.MinValue)
                 {
@@ -139,7 +139,7 @@ namespace MoneyTracker.Controllers
                 }
                 else
                 {
-                    indexModel.MoneyFilter.DateEnd = indexModel.MoneyFilter.DateEnd.ToUniversalTime();
+                    indexModel.MoneyFilter.DateEnd = indexModel.MoneyFilter.DateEnd.ToUniversalTime().AddDays(1);
                 }
                 if (indexModel.MoneyFilter.AmountEnd == 0)
                 {

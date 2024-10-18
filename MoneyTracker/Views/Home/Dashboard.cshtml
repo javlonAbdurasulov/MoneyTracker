@@ -17,11 +17,11 @@
         <div class="filters">
             <div class="filter-group">
                 <label for="date-start">Date Start</label>
-                <input type="date" id="date-start" value="@Model.Result.Filter.DateStart" name="MoneyFilter.DateStart">
+                <input type="date" id="date-start" value="@Model.Result.Filter.DateStart.ToString("yyyy-MM-dd")" name="MoneyFilter.DateStart">
             </div>
             <div class="filter-group">
                 <label for="date-end">Date End</label>
-                <input type="date" id="date-end" value="@Model.Result.Filter.DateEnd" name="MoneyFilter.DateEnd">
+                <input type="date" id="date-end" value="@Model.Result.Filter.DateEnd.ToString("yyyy-MM-dd")" name="MoneyFilter.DateEnd">
             </div>
             <div class="filter-group">
                 <label for="price-start">Price Start</label>
@@ -32,7 +32,8 @@
                 <input type="number" id="price-end" value="@Model.Result.Filter.AmountEnd" name="MoneyFilter.AmountEnd" placeholder="Enter price" min="0">
             </div>
             <div class="filter-group">
-                <button id="toggleButton">Show All Categories</button>
+                <button id="toggleButton" type="button">Show All Categories</button>
+                <input type="hidden" id="inputCategory" name="MoneyFilter.Category.Name" value=""/>
             </div>
 
             <div class="filter-group">
@@ -45,7 +46,8 @@
 
             <div class="filter-group">
                 <label for="subcategory">Subcategory</label>
-                <select id="subcategory" name="MoneyFilter.Category.Name">
+                <select id="subcategory" name="MoneyFilter.Category.Id">
+                    <option value="" class="">All</option>
                     <option value="1" class="income ">Заработная плата</option>
                     <option value="2" class="income ">Аренда</option>
                     <option value="3" class="income ">Иные приходы</option>
@@ -57,7 +59,7 @@
                     <option value="9" class="expense hidden">Другие расходы</option>
                 </select>
             </div>
-            <br />
+
             <div class="filter-group">
                 <label for="orderby-amount">Order by </label>
                 <select id="orderby-amount" name="MoneyFilter.OrderBy">
@@ -67,19 +69,19 @@
                     }
                     else{<option value="2" >По убыванию Даты</option>}
 
-                    @if (Model.Result.Filter.OrderBy == 2)
+                    @if (Model.Result.Filter.OrderBy == 1)
                     {
                         <option value="1" selected>По возрастанию Даты</option>
                     }
                     else{<option value="1" >По возрастанию Даты</option>}
 
-                    @if (Model.Result.Filter.OrderBy == 2)
+                    @if (Model.Result.Filter.OrderBy == 3)
                     {
                         <option value="3" selected>По возрастанию Суммы</option>
                     }
                     else{<option value="3" >По возрастанию Суммы</option>}
 
-                    @if (Model.Result.Filter.OrderBy == 2)
+                    @if (Model.Result.Filter.OrderBy == 4)
                     {
                         <option value="4" selected>По убыванию Суммы</option>
                     }
