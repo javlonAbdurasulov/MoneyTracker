@@ -27,15 +27,15 @@ namespace MoneyTracker.Controllers
         }
         public async Task<IActionResult> UpdateMoneyAsync(UpdateTransactionDTO updateTransaction)
         {
-            var income = await _transactionService.GetById(updateTransaction.Id);
+            var transaction = await _transactionService.GetById(updateTransaction.Id);
             UpdateView updateView = new UpdateView()
             {
-                Amount = income.Result.Amount,
-                Category = income.Result.Category,
-                Comment = income.Result.Comment,
-                Date = income.Result.Date.ToUniversalTime().AddDays(1),
-                Id = income.Result.Id,
-                UserId = income.Result.UserId,
+                Amount = transaction.Result.Amount,
+                Category = transaction.Result.Category,
+                Comment = transaction.Result.Comment,
+                Date = transaction.Result.Date.ToUniversalTime(),
+                Id = transaction.Result.Id,
+                UserId = transaction.Result.UserId,
                 UserName = updateTransaction.UserName
             };
             return View(updateView);

@@ -12,25 +12,59 @@
     </div>
     
     <div class="input-group">
-        <label for="transaction-category">Category</label>
+        <label for="categoryType">Category</label>
+            <select id="categoryType" name="Category.IsIncome">
         @if(@Model.Category.IsIncome == true){
-            <select id="transaction-category" name="Category.IsIncome">
-                <option value="true">Income</option>
-                <option value="false">Expense</option>
-            </select>
+                <option value="true" class="">Income</option>
+                <option value="false" class="">Expense</option>
         }
         else{
-            <select id="transaction-category" name="Category.IsIncome">
-                <option value="false">Expense</option>
-                <option value="true" >Income</option>
-            </select>
+                <option value="false" class="">Expense</option>
+                <option value="true" class="">Income</option>
         }
-        <div class="filter-group">
-            <label for="subcategory">Subcategory</label>
-            <select id="subcategory" name="Category.Id">
-                <!-- Options will be dynamically populated based on the selected category -->
             </select>
-        </div>
+    </div>
+    <div class="input-group">
+        <label for="subcategory">Subcategory</label>
+        <select id="subcategory" name="Category.Id">
+            <option value="@Model.Category.Id" class="@(Model.Category.IsIncome==true ? "income" : "expense")">@Model.Category.Name</option>
+            @if (@Model.Category.Id != 1)
+            {
+                <option value="1" class="income ">Заработная плата</option>   
+            }
+            @if (@Model.Category.Id != 2)
+            {
+            <option value="2" class="income ">Аренда</option>
+            }
+            @if (@Model.Category.Id != 3)
+            {
+            <option value="3" class="income ">Иные приходы</option>
+            }
+            @if (@Model.Category.Id != 4)
+            {
+            <option value="4" class="expense hidden">Продукты питания</option>
+            }
+            @if (@Model.Category.Id != 5)
+            {
+            <option value="5" class="expense hidden">Транспорт</option>
+            }
+            @if (@Model.Category.Id != 6)
+            {
+            <option value="6" class="expense hidden">Мобильная Связь</option>
+            }
+            @if (@Model.Category.Id != 7)
+            {
+            <option value="7" class="expense hidden">Интернет</option>
+            }
+            @if (@Model.Category.Id != 8)
+            {
+            <option value="8" class="expense hidden">Развлечение</option>
+            }
+            @if (@Model.Category.Id != 9)
+            {
+            <option value="9" class="expense hidden">Другие расходы</option>
+            }
+        </select>
     </div>
 
     <div class="input-group">

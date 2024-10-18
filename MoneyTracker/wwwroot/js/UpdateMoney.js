@@ -1,29 +1,10 @@
 ﻿document.addEventListener('DOMContentLoaded', function () {
-    var button = document.getElementById('toggleButton');
     var categoryType = document.getElementById('categoryType');
     var subcategory = document.getElementById('subcategory');
     var incomeOptions = document.querySelectorAll('.income');
     var expenseOptions = document.querySelectorAll('.expense');
     var allCategoriesVisible = false; // Переменная для отслеживания состояния
-    var inputField = document.getElementById('inputCategory');
 
-    // Функция для показа/скрытия select'ов
-    function toggleVisibility() {
-
-        allCategoriesVisible = !allCategoriesVisible; // Меняем состояние
-
-        if (allCategoriesVisible) {
-            categoryType.classList.add('hidden');
-            subcategory.classList.add('hidden');
-            button.textContent = 'Hide All Categories'; // Изменение текста кнопки
-            inputField.value = 'All';
-        } else {
-            categoryType.classList.remove('hidden');
-            subcategory.classList.remove('hidden');
-            button.textContent = 'Show All Categories'; // Изменение текста кнопки
-            inputField.value = '';
-        }
-    }
 
     // Функция для фильтрации подкатегорий в зависимости от выбора категории
     function filterSubcategories() {
@@ -49,13 +30,10 @@
         }
     }
 
-    // Событие для кнопки
-    button.addEventListener('click', toggleVisibility);
 
     // Событие для выбора категории
     categoryType.addEventListener('change', filterSubcategories);
-
-    // Начальная проверка видимости при загрузке страницы
-    console.log("Initial visibility state: ", allCategoriesVisible);
-    toggleVisibility(); // Скрыть селекты по умолчанию
+    filterSubcategories();
 });
+
+

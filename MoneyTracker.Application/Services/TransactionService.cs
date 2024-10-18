@@ -98,7 +98,6 @@ namespace MoneyTracker.Application.Services
             if (responseDelete)
             {
                 //--------------------------------
-
                 decimal amountMinus = DeletedTransaction.Category.IsIncome == true ? deletedAmount : 0;
                 decimal amountPlus = DeletedTransaction.Category.IsIncome == true ? 0 : deletedAmount;
 
@@ -132,23 +131,23 @@ namespace MoneyTracker.Application.Services
             var responseTransaction = await _transactionRepository.UpdateAsync(transaction);
 
             //------------------------------------------------
-            decimal amountMinus = transactionById.Result.Category.IsIncome == true ? transactionById.Result.Amount : 0;
-            decimal amountPlus = transactionById.Result.Category.IsIncome == true ? 0 : transactionById.Result.Amount;
+            var categoryById = await _categoryRepository.GetById(transaction.CategoryId);
+            decimal amountMinus = transactionById.Result.Category.IsIncome == true ? transactionById.Result.Amount : (transactionById.Result.Amount*-1);
+            decimal amountPlus = categoryById.IsIncome == true ? transaction.Amount : (transaction.Amount*-1);
 
             var updatedBalanceUser = await _userService.UpdateBalanceAsync(transaction.UserId, amountMinus, amountPlus);
             if (updatedBalanceUser == null)
             {
                 return new(updatedBalanceUser.Error);
             }
+            //amountMinus = categoryById.IsIncome == true ? 0 : transaction.Amount ;
+            //amountPlus = categoryById.IsIncome == true ?  transaction.Amount : 0;
 
-            amountMinus = transaction.Category.IsIncome == true ? 0 : transaction.Amount ;
-            amountPlus = transaction.Category.IsIncome == true ?  transaction.Amount : 0;
-
-            updatedBalanceUser = await _userService.UpdateBalanceAsync(transaction.UserId, amountMinus, amountPlus);
-            if (updatedBalanceUser == null)
-            {
-                return new(updatedBalanceUser.Error);
-            }
+            //updatedBalanceUser = await _userService.UpdateBalanceAsync(transaction.UserId, amountMinus, amountPlus);
+            //if (updatedBalanceUser == null)
+            //{
+            //    return new(updatedBalanceUser.Error);
+            //}
             return new(responseTransaction);
         }
     }
