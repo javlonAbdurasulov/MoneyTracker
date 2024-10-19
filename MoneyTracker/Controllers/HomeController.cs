@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata;
+using MoneyTracker.Application.Interfaces.Repository;
 using MoneyTracker.Application.Interfaces.Service;
 using MoneyTracker.Domain.Models;
 using MoneyTracker.Domain.Models.DTO;
@@ -14,11 +15,13 @@ namespace MoneyTracker.Controllers
     {
         private readonly IUserService _userService;
         private readonly ITransactionService _transactionService;
+        private readonly ICategoryRepository _categoryRepository;
 
-        public HomeController(IUserService userService, ITransactionService transactionService)
+        public HomeController(IUserService userService, ITransactionService transactionService, ICategoryRepository categoryRepository)
         {
             _userService = userService;
             _transactionService = transactionService;
+            _categoryRepository = categoryRepository;
         }
 
         public IActionResult Index()
@@ -115,7 +118,7 @@ namespace MoneyTracker.Controllers
                     DateStart = DateTime.MinValue.ToUniversalTime(),
                     AmountStart = 0,
                     AmountEnd = decimal.MaxValue,
-                    Category = new() { Name = "All" },
+                    Category = new() { Name = "All", IsIncome = true },
                     OrderBy = 2,
                     UserId = responseUser.Result.Id
                 };
@@ -139,8 +142,16 @@ namespace MoneyTracker.Controllers
                 {
                     indexModel.MoneyFilter.AmountEnd = decimal.MaxValue;
                 }
-
+                if (indexModel.MoneyFilter.Category.Id != 0)
+                {
+                    Category? id = await _categoryRepository.GetById(indexModel.MoneyFilter.Category.Id);
+                    indexModel.MoneyFilter.Category.Name = id.Name;
+                }else
+                {
+                    indexModel.MoneyFilter.Category.Name = "All";
+                }
             }
+
             ResponseModel<List<Transaction>> TransactionList = new ResponseModel<List<Transaction>>("");
 
             TransactionList = await _transactionService.ApplyFilter(indexModel.MoneyFilter);

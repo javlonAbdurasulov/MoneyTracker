@@ -39,24 +39,61 @@
             <div class="filter-group" id="forCategory">
                 <label for="categoryType">Category</label>
                 <select id="categoryType" name="MoneyFilter.Category.IsIncome">
-                    <option value="true" class="">Income</option>
-                    <option value="false" class="">Expense</option>
+                    @if(Model.Result.Filter.Category.IsIncome){
+                        <option value="true" class="">Income</option>
+                        <option value="false" class="">Expense</option>
+                    }else{
+                        <option value="false" class="">Expense</option>
+                        <option value="true" class="">Income</option>
+                    }
                 </select>
             </div>
 
             <div class="filter-group">
                 <label for="subcategory">Subcategory</label>
                 <select id="subcategory" name="MoneyFilter.Category.Id">
+                    <option value="@Model.Result.Filter.Category.Id"
+                            class="@(Model.Result.Filter.Category.Id==0 ?"" : Model.Result.Filter.Category.IsIncome ==true ? "income" : "expense")">@Model.Result.Filter.Category.Name</option>
+                    @if (Model.Result.Filter.Category.Id!=0)
+                    {
                     <option value="" class="">All</option>
-                    <option value="1" class="income ">Заработная плата</option>
+                    }
+                    @if (Model.Result.Filter.Category.Id != 1)
+                    {
+                        <option value="1" class="income ">Заработная плата</option>
+                    }
+                    @if (Model.Result.Filter.Category.Id != 2)
+                    {
                     <option value="2" class="income ">Аренда</option>
+                    }
+                    @if (Model.Result.Filter.Category.Id != 3)
+                    {
                     <option value="3" class="income ">Иные приходы</option>
+                    }
+                    @if (Model.Result.Filter.Category.Id != 4)
+                    {
                     <option value="4" class="expense hidden">Продукты питания</option>
+                    }
+                    @if (Model.Result.Filter.Category.Id != 5)
+                    {
                     <option value="5" class="expense hidden">Транспорт</option>
-                    <option value="6" class="expense hidden">Мобильная Связь</option>
+                    }
+                    @if (Model.Result.Filter.Category.Id != 6)
+                    {
+                    <option value="6" class="expense hidden">Мобильная Связь</option>    
+                    }
+                    @if (Model.Result.Filter.Category.Id != 7)
+                    {
                     <option value="7" class="expense hidden">Интернет</option>
-                    <option value="8" class="expense hidden">Развлечение</option>
+                    }
+                    @if (Model.Result.Filter.Category.Id != 8)
+                    {
+                    <option value="8" class="expense hidden">Развлечение</option>    
+                    }
+                    @if (Model.Result.Filter.Category.Id != 9)
+                    {
                     <option value="9" class="expense hidden">Другие расходы</option>
+                    }
                 </select>
             </div>
 

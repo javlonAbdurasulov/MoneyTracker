@@ -12,7 +12,7 @@
 
         allCategoriesVisible = !allCategoriesVisible; // Меняем состояние
 
-        if (allCategoriesVisible) {
+        if (!allCategoriesVisible) {
             categoryType.classList.add('hidden');
             subcategory.classList.add('hidden');
             button.textContent = 'Hide All Categories'; // Изменение текста кнопки
