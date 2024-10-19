@@ -148,7 +148,7 @@ namespace MoneyTracker.Controllers
                     indexModel.MoneyFilter.Category.Name = id.Name;
                 }else
                 {
-                    indexModel.MoneyFilter.Category.Name = "All";
+                    //indexModel.MoneyFilter.Category.Name = "All";
                 }
             }
 
