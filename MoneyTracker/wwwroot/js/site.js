@@ -1,10 +1,10 @@
-﻿document.addEventListener('DOMContentLoaded', function () {
+﻿    var allCategoriesVisible = false; // Переменная для отслеживания состояния
+document.addEventListener('DOMContentLoaded', function () {
     var button = document.getElementById('toggleButton');
     var categoryType = document.getElementById('categoryType');
     var subcategory = document.getElementById('subcategory');
     var incomeOptions = document.querySelectorAll('.income');
     var expenseOptions = document.querySelectorAll('.expense');
-    var allCategoriesVisible = false; // Переменная для отслеживания состояния
     var inputField = document.getElementById('inputCategory');
     
     // Функция для показа/скрытия select'ов
