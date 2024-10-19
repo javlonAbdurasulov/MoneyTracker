@@ -8,5 +8,6 @@ namespace MoneyTracker.Models
         public User User{ get; set; }
         public MoneyFilterDTO Filter { get; set; }
         public List<Transaction> Transactions{ get; set; }
+        public bool categoryIsVisible{ get; set; }
     }
 }

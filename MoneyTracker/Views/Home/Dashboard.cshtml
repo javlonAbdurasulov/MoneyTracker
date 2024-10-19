@@ -32,13 +32,22 @@
                 <input type="number" id="price-end" value="@Model.Result.Filter.AmountEnd" name="MoneyFilter.AmountEnd" placeholder="Enter price" min="0">
             </div>
             <div class="filter-group">
-                <button id="toggleButton" type="button">Show All Categories</button>
+                <button id="toggleButton" type="button">
+                    @if (Model.categoryIsVisible)
+                    {
+                        <text>Show All Categories</text>
+                    }
+                    else
+                    {
+                        <text>Hide All Categories</text>
+                    }
+                </button>
                 <input type="hidden" id="inputCategory" name="MoneyFilter.Category.Name" value=""/>
             </div>
 
             <div class="filter-group" id="forCategory">
                 <label for="categoryType">Category</label>
-                <select id="categoryType" name="MoneyFilter.Category.IsIncome">
+                <select id="categoryType" class="@(Model.categoryIsVisible==true) hidden" name="MoneyFilter.Category.IsIncome">
                     @if(Model.Result.Filter.Category.IsIncome){
                         <option value="true" class="">Income</option>
                         <option value="false" class="">Expense</option>
