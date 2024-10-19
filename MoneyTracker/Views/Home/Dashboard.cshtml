@@ -39,7 +39,7 @@
             <input class="hidden" value="@Model.Result.categoryIsVisible" name="categoryIsVisibility"/>
             <div class="filter-group" id="forCategory">
                 <label for="categoryType">Category</label>
-                <select id="categoryType" class="@(Model.Result.categoryIsVisible==true ? "hidden":"")" name="MoneyFilter.Category.IsIncome">
+                <select id="categoryType" class="@(Model.Result.categoryIsVisible==false ? "hidden":"")" name="MoneyFilter.Category.IsIncome">
                     @if(Model.Result.Filter.Category.IsIncome){
                         <option value="true" class="">Income</option>
                         <option value="false" class="">Expense</option>
