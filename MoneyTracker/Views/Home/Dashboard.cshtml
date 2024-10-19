@@ -32,22 +32,14 @@
                 <input type="number" id="price-end" value="@Model.Result.Filter.AmountEnd" name="MoneyFilter.AmountEnd" placeholder="Enter price" min="0">
             </div>
             <div class="filter-group">
-                <button id="toggleButton" type="button">
-                    @if (Model.categoryIsVisible)
-                    {
-                        <text>Show All Categories</text>
-                    }
-                    else
-                    {
-                        <text>Hide All Categories</text>
-                    }
-                </button>
-                <input type="hidden" id="inputCategory" name="MoneyFilter.Category.Name" value=""/>
+                <button id="toggleButton" type="button">Show All Categories</button>
+                <input type="hidden" id="inputCategory" name="MoneyFilter.Category.Name" value="" />
+                <input type="hidden" id="inputVisible" name="categoryIsVisibility" value="true" />
             </div>
-
+            <input class="hidden" value="@Model.Result.categoryIsVisible" name="categoryIsVisibility"/>
             <div class="filter-group" id="forCategory">
                 <label for="categoryType">Category</label>
-                <select id="categoryType" class="@(Model.categoryIsVisible==true) hidden" name="MoneyFilter.Category.IsIncome">
+                <select id="categoryType" class="@(Model.Result.categoryIsVisible==true ? "hidden":"")" name="MoneyFilter.Category.IsIncome">
                     @if(Model.Result.Filter.Category.IsIncome){
                         <option value="true" class="">Income</option>
                         <option value="false" class="">Expense</option>
@@ -60,7 +52,7 @@
 
             <div class="filter-group">
                 <label for="subcategory">Subcategory</label>
-                <select id="subcategory" name="MoneyFilter.Category.Id">
+                <select id="subcategory" class="@(Model.Result.categoryIsVisible==true ? "hidden":"")" name="MoneyFilter.Category.Id">
                     <option value="@Model.Result.Filter.Category.Id"
                             class="@(Model.Result.Filter.Category.Id==0 ?"" : Model.Result.Filter.Category.IsIncome ==true ? "income" : "expense")">@(Model.Result.Filter.Category.Name ?? "All")</option>
                     @if (Model.Result.Filter.Category.Id!=0)
@@ -138,7 +130,7 @@
             </div>
             <input type="hidden" name="MoneyFilter.UserId" value="@Model.Result.User.Id">
             <input type="hidden" name="UserName" value="@Model.Result.User.UserName">
-            <input type="hidden" name="DefaultFilter" value="false">
+            <input type="hidden" id="defaultFilter" name="DefaultFilter" value="false">
             <button class="filter-btn" id="filter-button" type="submit">Apply Filters</button>
         </div>
     </form>

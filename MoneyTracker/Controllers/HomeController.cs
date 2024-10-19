@@ -108,7 +108,10 @@ namespace MoneyTracker.Controllers
             {
                 return View(new ResponseModel<DashboardModel>(responseUser.Error));
             }
-
+            if(indexModel.categoryIsVisibility)
+            {
+                indexModel.MoneyFilter.Category = new() { Name = "All", IsIncome = true };
+            }
 
             if (indexModel.DefaultFilter)
             {
@@ -160,7 +163,8 @@ namespace MoneyTracker.Controllers
             {
                 User = responseUser.Result,
                 Transactions = TransactionList.Result == null ? new() : TransactionList.Result,
-                Filter = indexModel.MoneyFilter
+                Filter = indexModel.MoneyFilter,
+                categoryIsVisible = indexModel.categoryIsVisibility
             };
 
             return View(new ResponseModel<DashboardModel>(responseDashModel));

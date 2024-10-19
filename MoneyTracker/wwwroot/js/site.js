@@ -5,8 +5,10 @@
     var incomeOptions = document.querySelectorAll('.income');
     var expenseOptions = document.querySelectorAll('.expense');
     var inputField = document.getElementById('inputCategory');
+    var inputVisible = document.getElementById('inputVisible');
+    var inputFilter = document.getElementById('defaultFilter');
     var allCategoriesVisible = document.getElementById('categoryVisibility'); // Переменная для отслеживания состояния
-    
+    var res = true;
     // Функция для показа/скрытия select'ов
     function toggleVisibility() {
 
@@ -15,13 +17,17 @@
         if (!allCategoriesVisible) {
             categoryType.classList.add('hidden');
             subcategory.classList.add('hidden');
+            inputVisible.value = true;
             button.textContent = 'Hide All Categories'; // Изменение текста кнопки
             inputField.value = 'All';
+            
         } else {
             categoryType.classList.remove('hidden');
             subcategory.classList.remove('hidden');
-            button.textContent = 'Show All Categories'; // Изменение текста кнопки
+            
+            inputVisible.value = false;
             inputField.value = '';
+            button.textContent = 'Show All Categories'; // Изменение текста кнопки
         }
     }
 
@@ -56,5 +62,5 @@
     categoryType.addEventListener('change', filterSubcategories);
 
     // Начальная проверка видимости при загрузке страницы
-    toggleVisibility(); // Скрыть селекты по умолчанию
+    //toggleVisibility(); // Скрыть селекты по умолчанию
 });
