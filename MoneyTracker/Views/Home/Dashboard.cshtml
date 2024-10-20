@@ -31,13 +31,45 @@
                 <label for="price-end">Price End</label>
                 <input type="number" id="price-end" value="@Model.Result.Filter.AmountEnd" name="MoneyFilter.AmountEnd" placeholder="Enter price" min="0">
             </div>
+
             <div class="filter-group">
-                <button id="toggleButton" type="button">Show All Categories</button>
-                <input type="hidden" id="inputCategory" name="MoneyFilter.Category.Name" value="" />
-                <input type="hidden" id="inputVisible" name="categoryIsVisibility" value="true" />
+                <label for="orderby-amount">Order by </label>
+                <select id="orderby-amount" name="MoneyFilter.OrderBy">
+                    @if (Model.Result.Filter.OrderBy == 2)
+                    {
+                        <option value="2" selected>По убыванию Даты</option>
+                    }
+                    else{<option value="2" >По убыванию Даты</option>}
+
+                    @if (Model.Result.Filter.OrderBy == 1)
+                    {
+                        <option value="1" selected>По возрастанию Даты</option>
+                    }
+                    else{<option value="1" >По возрастанию Даты</option>}
+
+                    @if (Model.Result.Filter.OrderBy == 3)
+                    {
+                        <option value="3" selected>По возрастанию Суммы</option>
+                    }
+                    else{<option value="3" >По возрастанию Суммы</option>}
+
+                    @if (Model.Result.Filter.OrderBy == 4)
+                    {
+                        <option value="4" selected>По убыванию Суммы</option>
+                    }
+                    else{<option value="4" >По убыванию Суммы</option>}
+
+                </select>
             </div>
-            <input class="hidden" value="@Model.Result.categoryIsVisible" name="categoryIsVisibility"/>
-            @if (Model.Result.categoryIsVisibile)
+            <div class="filter-group">
+                <button type="submit" id="toggleButton" type="button">
+                    @(Model.Result.categoryIsVisible == true ? "Show All Categories":"Hide All Categories")
+                </button>
+                <input type="hidden" id="inputCategory" name="MoneyFilter.Category.Name" value="" />
+            </div>
+            <input type="hidden" id="inputVisible" name="categoryIsVisibility" value="@Model.Result.categoryIsVisible" />
+            @* <input class="hidden" value="@Model.Result.categoryIsVisible" name="categoryIsVisibility"/> *@
+            @if (Model.Result.categoryIsVisible)
             {
                 <div class="filter-group" id="forCategory">
                     <label for="categoryType">Category</label>
@@ -52,7 +84,9 @@
                     </select>
                 </div>
             }
-            
+            @if (Model.Result.categoryIsVisible)
+            {
+                
             <div class="filter-group">
                 <label for="subcategory">Subcategory</label>
                 <select id="subcategory" class="" name="MoneyFilter.Category.Id">
@@ -101,40 +135,11 @@
                     }
                 </select>
             </div>
-
-            <div class="filter-group">
-                <label for="orderby-amount">Order by </label>
-                <select id="orderby-amount" name="MoneyFilter.OrderBy">
-                    @if (Model.Result.Filter.OrderBy == 2)
-                    {
-                        <option value="2" selected>По убыванию Даты</option>
-                    }
-                    else{<option value="2" >По убыванию Даты</option>}
-
-                    @if (Model.Result.Filter.OrderBy == 1)
-                    {
-                        <option value="1" selected>По возрастанию Даты</option>
-                    }
-                    else{<option value="1" >По возрастанию Даты</option>}
-
-                    @if (Model.Result.Filter.OrderBy == 3)
-                    {
-                        <option value="3" selected>По возрастанию Суммы</option>
-                    }
-                    else{<option value="3" >По возрастанию Суммы</option>}
-
-                    @if (Model.Result.Filter.OrderBy == 4)
-                    {
-                        <option value="4" selected>По убыванию Суммы</option>
-                    }
-                    else{<option value="4" >По убыванию Суммы</option>}
-
-                </select>
-            </div>
+            }
             <input type="hidden" name="MoneyFilter.UserId" value="@Model.Result.User.Id">
             <input type="hidden" name="UserName" value="@Model.Result.User.UserName">
             <input type="hidden" id="defaultFilter" name="DefaultFilter" value="false">
-            <button class="filter-btn" id="filter-button" type="submit">Apply Filters</button>
+            <button class="filter-btn" id="toggleButton2" type="submit">Apply Filters</button>
         </div>
     </form>
     <form method="get" asp-action="Dashboard" asp-controller="Home">
