@@ -37,22 +37,25 @@
                 <input type="hidden" id="inputVisible" name="categoryIsVisibility" value="true" />
             </div>
             <input class="hidden" value="@Model.Result.categoryIsVisible" name="categoryIsVisibility"/>
-            <div class="filter-group" id="forCategory">
-                <label for="categoryType">Category</label>
-                <select id="categoryType" class="@(Model.Result.categoryIsVisible==false ? "hidden":"")" name="MoneyFilter.Category.IsIncome">
-                    @if(Model.Result.Filter.Category.IsIncome){
-                        <option value="true" class="">Income</option>
-                        <option value="false" class="">Expense</option>
-                    }else{
-                        <option value="false" class="">Expense</option>
-                        <option value="true" class="">Income</option>
-                    }
-                </select>
-            </div>
-
+            @if (Model.Result.categoryIsVisibile)
+            {
+                <div class="filter-group" id="forCategory">
+                    <label for="categoryType">Category</label>
+                    <select id="categoryType" class="" name="MoneyFilter.Category.IsIncome">
+                        @if(Model.Result.Filter.Category.IsIncome){
+                            <option value="true" class="">Income</option>
+                            <option value="false" class="">Expense</option>
+                        }else{
+                            <option value="false" class="">Expense</option>
+                            <option value="true" class="">Income</option>
+                        }
+                    </select>
+                </div>
+            }
+            
             <div class="filter-group">
                 <label for="subcategory">Subcategory</label>
-                <select id="subcategory" class="@(Model.Result.categoryIsVisible==true ? "hidden":"")" name="MoneyFilter.Category.Id">
+                <select id="subcategory" class="@(Model.Result.categoryIsVisible==false ? "hidden":"")" name="MoneyFilter.Category.Id">
                     <option value="@Model.Result.Filter.Category.Id"
                             class="@(Model.Result.Filter.Category.Id==0 ?"" : Model.Result.Filter.Category.IsIncome ==true ? "income" : "expense")">@(Model.Result.Filter.Category.Name ?? "All")</option>
                     @if (Model.Result.Filter.Category.Id!=0)

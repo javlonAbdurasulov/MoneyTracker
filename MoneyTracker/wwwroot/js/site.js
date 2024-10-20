@@ -12,22 +12,28 @@
     // Функция для показа/скрытия select'ов
     function toggleVisibility() {
 
+        if (document.getElementById('subcategory')) {
+            
+            inputField.value = '';
+            button.textContent = 'Hide All Categories'; // Изменение текста кнопки
+        } else {
+            inputField.value = 'All';
+            button.textContent = 'Show All Categories'; // Изменение текста кнопки
+            
+        }
+
         allCategoriesVisible = !allCategoriesVisible; // Меняем состояние
 
         if (!allCategoriesVisible) {
-            categoryType.classList.add('hidden');
-            subcategory.classList.add('hidden');
-            inputVisible.value = true;
-            button.textContent = 'Hide All Categories'; // Изменение текста кнопки
-            inputField.value = 'All';
+            //categoryType.classList.add('hidden');
+            //subcategory.classList.add('hidden');
+            //inputVisible.value = true;
             
         } else {
-            categoryType.classList.remove('hidden');
-            subcategory.classList.remove('hidden');
+            //categoryType.classList.remove('hidden');
+            //subcategory.classList.remove('hidden');
             
-            inputVisible.value = false;
-            inputField.value = '';
-            button.textContent = 'Show All Categories'; // Изменение текста кнопки
+            //inputVisible.value = false;
         }
     }
 
