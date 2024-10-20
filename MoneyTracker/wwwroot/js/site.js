@@ -19,7 +19,6 @@
         } else {
             inputField.value = 'All';
             button.textContent = 'Show All Categories'; // Изменение текста кнопки
-            
         }
 
         allCategoriesVisible = !allCategoriesVisible; // Меняем состояние
@@ -36,7 +35,9 @@
             //inputVisible.value = false;
         }
     }
-
+    function clickButton() {
+        
+    }
     // Функция для фильтрации подкатегорий в зависимости от выбора категории
     function filterSubcategories() {
         var selectedCategory = categoryType.value;
@@ -62,7 +63,7 @@
     }
 
     // Событие для кнопки
-    button.addEventListener('click', toggleVisibility);
+    button.addEventListener('click', clickButton);
 
     // Событие для выбора категории
     categoryType.addEventListener('change', filterSubcategories);

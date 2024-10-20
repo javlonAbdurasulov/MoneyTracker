@@ -108,10 +108,7 @@ namespace MoneyTracker.Controllers
             {
                 return View(new ResponseModel<DashboardModel>(responseUser.Error));
             }
-            if(indexModel.categoryIsVisibility)
-            {
-                indexModel.MoneyFilter.Category = new() { Name = "All", IsIncome = true };
-            }
+            
 
             if (indexModel.DefaultFilter)
             {
@@ -144,6 +141,10 @@ namespace MoneyTracker.Controllers
                 if (indexModel.MoneyFilter.AmountEnd == 0)
                 {
                     indexModel.MoneyFilter.AmountEnd = decimal.MaxValue;
+                }
+                if (!indexModel.categoryIsVisibility)
+                {
+                    indexModel.MoneyFilter.Category = new() { Name = "All", IsIncome = true };
                 }
                 if (indexModel.MoneyFilter.Category.Id != 0)
                 {

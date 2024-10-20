@@ -55,7 +55,7 @@
             
             <div class="filter-group">
                 <label for="subcategory">Subcategory</label>
-                <select id="subcategory" class="@(Model.Result.categoryIsVisible==false ? "hidden":"")" name="MoneyFilter.Category.Id">
+                <select id="subcategory" class="" name="MoneyFilter.Category.Id">
                     <option value="@Model.Result.Filter.Category.Id"
                             class="@(Model.Result.Filter.Category.Id==0 ?"" : Model.Result.Filter.Category.IsIncome ==true ? "income" : "expense")">@(Model.Result.Filter.Category.Name ?? "All")</option>
                     @if (Model.Result.Filter.Category.Id!=0)
